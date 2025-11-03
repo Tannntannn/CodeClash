@@ -1,0 +1,426 @@
+[gd_scene load_steps=28 format=3 uid="uid://bgjbp83euoaa7"]
+
+[ext_resource type="Script" uid="uid://b753uw1r5xh1l" path="res://Lesson 3/lesson_3.gd" id="1_swn1q"]
+[ext_resource type="Texture2D" uid="uid://dmmd50fehsg8d" path="res://Quiz Mode/Quiz assets/Lesson3_assets/Screenshot 2025-09-14 185853.png" id="2_8rfl3"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_1vtaj"]
+[ext_resource type="Script" uid="uid://cg8d2uqx6axsv" path="res://Lesson 3/double_total_L3.gd" id="4_r4yig"]
+[ext_resource type="Script" uid="uid://0x08yuuk34a6" path="res://Lesson 3/double_share_L3.gd" id="5_rav5t"]
+[ext_resource type="Script" uid="uid://r3jjc1fomjno" path="res://Lesson 3/Scanner_L3.gd" id="6_cehjx"]
+[ext_resource type="Script" uid="uid://b6e1a0uoiwbyk" path="res://Lesson 3/intL3.gd" id="7_cjp4u"]
+[ext_resource type="Script" uid="uid://cm3qbarvvf8v3" path="res://Lesson 3/total_L3.gd" id="8_1vtaj"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="9_1vtaj"]
+[ext_resource type="Script" uid="uid://calyq875yo3bb" path="res://Lesson 3/int_buttonL3.gd" id="9_6n7fw"]
+[ext_resource type="Script" uid="uid://lob4xs121s3j" path="res://Lesson 3/double_total_buttonL3.gd" id="10_x63av"]
+[ext_resource type="Script" uid="uid://bfsgbaq8khue5" path="res://Lesson 3/Scanner_buttonL3.gd" id="11_2qw4h"]
+[ext_resource type="Script" uid="uid://cbwu63icpdaca" path="res://Lesson 3/double_share_buttonL3.gd" id="12_x7khl"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="13_y3ts1"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="14_805l3"]
+[ext_resource type="Script" uid="uid://cwytb8cxwggvi" path="res://Lesson 3/total_button_L3.gd" id="14_r4yig"]
+[ext_resource type="Texture2D" uid="uid://ggd2016ok2g8" path="res://Quiz Mode/Quiz assets/hintbulb.png" id="17_cehjx"]
+[ext_resource type="Texture2D" uid="uid://cxdjg51rb310" path="res://Quiz Mode/Quiz assets/hintnum.png" id="18_cjp4u"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="19_ct808"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cshl4"]
+texture = ExtResource("2_8rfl3")
+modulate_color = Color(0.858708, 0.868367, 0.983788, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5cmiv"]
+texture = ExtResource("3_1vtaj")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r4yig"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdmq8"]
+texture = ExtResource("3_1vtaj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_baxob"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="FontVariation" id="FontVariation_nmjbr"]
+base_font = ExtResource("13_y3ts1")
+
+[sub_resource type="FontVariation" id="FontVariation_u11hg"]
+base_font = ExtResource("13_y3ts1")
+
+[sub_resource type="FontVariation" id="FontVariation_4d762"]
+base_font = ExtResource("13_y3ts1")
+
+[node name="Lesson3" type="Control" groups=["GameController"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_swn1q")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cshl4")
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.339
+anchor_top = 0.5
+anchor_right = 0.339
+anchor_bottom = 0.5
+offset_left = -370.528
+offset_top = -370.0
+offset_right = 340.472
+offset_bottom = 373.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5cmiv")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Panel"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 168.0
+offset_right = 681.0
+offset_bottom = 634.0
+
+[node name="Panel" type="Panel" parent="Panel/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(0, 750)
+layout_mode = 2
+
+[node name="doubletotalL3" type="Panel" parent="Panel/Panel/ScrollContainer/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 275.0
+offset_right = 152.0
+offset_bottom = 304.0
+script = ExtResource("4_r4yig")
+allowed_button_name = "doubletotalbuttonL3"
+
+[node name="doubleshareL3" type="Panel" parent="Panel/Panel/ScrollContainer/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 410.0
+offset_right = 141.0
+offset_bottom = 444.0
+script = ExtResource("5_rav5t")
+allowed_button_name = "doublesharebuttonL3"
+
+[node name="ScannerL3" type="Panel" parent="Panel/Panel/ScrollContainer/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 195.0
+offset_right = 147.0
+offset_bottom = 223.0
+script = ExtResource("6_cehjx")
+allowed_button_name = "ScannerbuttonL3"
+
+[node name="intL3" type="Panel" parent="Panel/Panel/ScrollContainer/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 77.0
+offset_top = 357.0
+offset_right = 131.0
+offset_bottom = 388.0
+script = ExtResource("7_cjp4u")
+allowed_button_name = "intL3button"
+
+[node name="totalL3" type="Panel" parent="Panel/Panel/ScrollContainer/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 399.0
+offset_top = 469.0
+offset_right = 460.0
+offset_bottom = 499.0
+script = ExtResource("8_1vtaj")
+allowed_button_name = "totalbuttonL3"
+
+[node name="Label" type="Label" parent="Panel/Panel/ScrollContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.127
+anchor_top = 0.3
+anchor_right = 1.127
+anchor_bottom = 0.3
+offset_left = 72.0
+offset_top = -145.0
+offset_right = 575.0
+offset_bottom = 432.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "import java.util.Scanner;
+
+public class BillSplitter {
+    public static void main(String[] args) {
+                    sc = new Scanner(System.in);
+
+        System.out.print(\"Enter total bill: \");
+                         = sc.nextDouble();
+
+        System.out.print(\"Enter number of people: \");
+             		 people = sc.nextInt();
+
+                         = total / people;
+
+        System.out.println(\"Total Bill: \" +                 );
+        System.out.println(\"Number of People: \" + people);
+        System.out.println(\"Each Person Pays: \" + share);
+    }
+}
+"
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 2
+offset_left = 103.0
+offset_top = 97.0
+offset_right = 582.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_1vtaj")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_r4yig")
+text = "Complete this Java program that 
+calculates each person’s share of a total bill."
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel/Panel"]
+layout_mode = 0
+offset_left = 102.0
+offset_top = 149.0
+offset_right = 581.0
+offset_bottom = 202.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_1vtaj")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_r4yig")
+text = "You can scroll the code to see the other part"
+horizontal_alignment = 1
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828
+anchor_top = 0.478
+anchor_right = 0.828
+anchor_bottom = 0.478
+offset_left = -125.856
+offset_top = -321.744
+offset_right = 198.144
+offset_bottom = 353.256
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gdmq8")
+
+[node name="intL3button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.285
+anchor_top = 0.249
+anchor_right = 0.285
+anchor_bottom = 0.249
+offset_left = -54.34
+offset_top = -13.075
+offset_right = 6.66
+offset_bottom = 19.925
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "int"
+script = ExtResource("9_6n7fw")
+
+[node name="doubletotalbuttonL3" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.495
+anchor_top = 0.252
+anchor_right = 0.495
+anchor_bottom = 0.252
+offset_left = 15.62
+offset_top = 29.256
+offset_right = 137.62
+offset_bottom = 69.256
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "double total"
+script = ExtResource("10_x63av")
+
+[node name="ScannerbuttonL3" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.706
+anchor_top = 0.25
+anchor_right = 0.706
+anchor_bottom = 0.25
+offset_left = -108.744
+offset_top = -12.5
+offset_right = -21.744
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "Scanner
+"
+script = ExtResource("11_2qw4h")
+
+[node name="doublesharebuttonL3" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.294
+anchor_top = 0.329
+anchor_right = 0.294
+anchor_bottom = 0.329
+offset_left = -64.256
+offset_top = -18.638
+offset_right = 64.744
+offset_bottom = 21.362
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "double share"
+script = ExtResource("12_x7khl")
+
+[node name="totalbuttonL3" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.254
+anchor_right = 0.5
+anchor_bottom = 0.254
+offset_left = 65.0
+offset_top = -15.988
+offset_right = 133.0
+offset_bottom = 19.012
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "total"
+script = ExtResource("14_r4yig")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.258
+anchor_top = 0.037
+anchor_right = 0.258
+anchor_bottom = 0.037
+offset_left = -20.592
+offset_top = 72.986
+offset_right = 181.408
+offset_bottom = 105.986
+theme_override_fonts/font = SubResource("FontVariation_nmjbr")
+theme_override_font_sizes/font_size = 25
+text = "Drag and Drop"
+horizontal_alignment = 1
+
+[node name="Clock" type="Sprite2D" parent="Panel2"]
+position = Vector2(66, 395)
+scale = Vector2(0.133, 0.1135)
+texture = ExtResource("14_805l3")
+
+[node name="TimeLabel" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 424.0
+offset_right = 90.0
+offset_bottom = 448.0
+theme_override_fonts/font = SubResource("FontVariation_u11hg")
+theme_override_font_sizes/font_size = 19
+text = "5:00"
+horizontal_alignment = 1
+
+[node name="MistakesLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.523
+anchor_top = 0.741
+anchor_right = 0.523
+anchor_bottom = 0.741
+offset_left = -72.452
+offset_top = -18.175
+offset_right = 72.548
+offset_bottom = 17.825
+theme_override_fonts/font = ExtResource("13_y3ts1")
+
+[node name="Label4" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 526.0
+offset_right = 284.0
+offset_bottom = 569.0
+theme_override_fonts/font = ExtResource("13_y3ts1")
+text = "If you made 3 mistakes it's
+                       game over"
+
+[node name="ScoreLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.593
+anchor_top = 0.631
+anchor_right = 0.593
+anchor_bottom = 0.631
+offset_left = 22.868
+offset_top = -48.925
+offset_right = 84.868
+offset_bottom = 19.075
+theme_override_fonts/font = SubResource("FontVariation_4d762")
+text = "Score:"
+
+[node name="HintButton" type="TextureButton" parent="Panel2"]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 374.0
+offset_right = 173.0
+offset_bottom = 419.0
+texture_normal = ExtResource("17_cehjx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 423.0
+offset_right = 183.0
+offset_bottom = 444.0
+texture = ExtResource("18_cjp4u")
+expand_mode = 1
+
+[node name="HintLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.603
+anchor_top = 1.267
+anchor_right = 0.603
+anchor_bottom = 1.267
+offset_left = -60.372
+offset_top = -429.225
+offset_right = -47.372
+offset_bottom = -414.225
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("19_ct808")
+text = " "
+
+[node name="Timer" type="Timer" parent="."]

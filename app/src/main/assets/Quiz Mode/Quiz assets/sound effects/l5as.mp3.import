@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dehhr176hdnju"
+path="res://.godot/imported/l5as.mp3-88573473c8bef59960cc153d8be3a86d.mp3str"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/l5as.mp3"
+dest_files=["res://.godot/imported/l5as.mp3-88573473c8bef59960cc153d8be3a86d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="2dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="?attr/selectableItemBackground">
+
+        <!-- Student Name -->
+        <TextView
+            android:id="@+id/studentName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Student Name"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <!-- Lesson -->
+        <TextView
+            android:id="@+id/studentLesson"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="No lesson yet"
+            android:textColor="#666666"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+        <!-- Score -->
+        <TextView
+            android:id="@+id/studentScore"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="No score yet"
+            android:textColor="@color/red_500"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:background="@drawable/score_background"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp" />
+
+        <!-- Attempt Count Display Only -->
+        <TextView
+            android:id="@+id/attemptCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0/3"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:background="@drawable/score_background"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

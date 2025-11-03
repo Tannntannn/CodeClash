@@ -1,0 +1,399 @@
+[gd_scene load_steps=28 format=3 uid="uid://dni2d5umo1x7"]
+
+[ext_resource type="Script" uid="uid://dd3wy1dyhkjqc" path="res://lesson 2/lesson_2.gd" id="1_u1p1o"]
+[ext_resource type="Texture2D" uid="uid://ce6cpiy70vm8r" path="res://Quiz Mode/Quiz assets/Lesson2.png" id="2_4xjkb"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_y7yfv"]
+[ext_resource type="Script" uid="uid://jtavyeuwted4" path="res://lesson 2/int_L2.gd" id="4_wimkk"]
+[ext_resource type="Script" uid="uid://so8mtoykdmhp" path="res://lesson 2/string_L2.gd" id="5_03grw"]
+[ext_resource type="Script" uid="uid://bcncndn0obn13" path="res://lesson 2/char_L2.gd" id="5_psid7"]
+[ext_resource type="Script" uid="uid://dj852m0wv401y" path="res://lesson 2/boolean_L2.gd" id="6_03grw"]
+[ext_resource type="Script" uid="uid://didqcoyphsy0v" path="res://lesson 2/name_L2.gd" id="8_3pgfy"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="8_y7yfv"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="9_3pgfy"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="9_y7yfv"]
+[ext_resource type="Script" uid="uid://c34035nu5xryp" path="res://lesson 2/string_L2_button.gd" id="10_4d762"]
+[ext_resource type="Script" uid="uid://ur3n1mqoubnw" path="res://lesson 2/int_L2_button.gd" id="10_u1p1o"]
+[ext_resource type="Script" uid="uid://4bdcrtubhkjm" path="res://lesson 2/char_L2_button.gd" id="11_4xjkb"]
+[ext_resource type="Script" uid="uid://b2c5knrprgy10" path="res://lesson 2/boolean_L2_button.gd" id="12_y7yfv"]
+[ext_resource type="Script" uid="uid://78b75awvxsvm" path="res://lesson 2/name_L2_button.gd" id="14_cshl4"]
+[ext_resource type="Texture2D" uid="uid://ggd2016ok2g8" path="res://Quiz Mode/Quiz assets/hintbulb.png" id="17_5cmiv"]
+[ext_resource type="Texture2D" uid="uid://cxdjg51rb310" path="res://Quiz Mode/Quiz assets/hintnum.png" id="18_gdmq8"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="19_baxob"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cshl4"]
+texture = ExtResource("2_4xjkb")
+modulate_color = Color(0.400698, 0.400698, 0.400698, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5cmiv"]
+texture = ExtResource("3_y7yfv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3pgfy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdmq8"]
+texture = ExtResource("3_y7yfv")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_baxob"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="FontVariation" id="FontVariation_nmjbr"]
+base_font = ExtResource("8_y7yfv")
+
+[sub_resource type="FontVariation" id="FontVariation_u11hg"]
+base_font = ExtResource("8_y7yfv")
+
+[sub_resource type="FontVariation" id="FontVariation_4d762"]
+base_font = ExtResource("8_y7yfv")
+
+[node name="Lesson2" type="Control" groups=["GameController"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u1p1o")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cshl4")
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.339
+anchor_top = 0.5
+anchor_right = 0.339
+anchor_bottom = 0.5
+offset_left = -367.528
+offset_top = -378.0
+offset_right = 317.472
+offset_bottom = 374.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5cmiv")
+
+[node name="intL2" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 267.0
+offset_right = 175.0
+offset_bottom = 292.0
+script = ExtResource("4_wimkk")
+allowed_button_name = "intL2button"
+
+[node name="charL2" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 326.0
+offset_right = 177.0
+offset_bottom = 351.0
+script = ExtResource("5_psid7")
+allowed_button_name = "charL2button"
+
+[node name="booleanL2" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 356.0
+offset_right = 177.0
+offset_bottom = 381.0
+script = ExtResource("6_03grw")
+allowed_button_name = "booleanL2button"
+
+[node name="StringL2" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 298.0
+offset_right = 175.0
+offset_bottom = 323.0
+script = ExtResource("5_03grw")
+allowed_button_name = "StringL2button"
+
+[node name="nameL2" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 402.0
+offset_top = 442.0
+offset_right = 466.0
+offset_bottom = 467.0
+script = ExtResource("8_3pgfy")
+allowed_button_name = "nameL2button"
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.472
+anchor_right = 0.5
+anchor_bottom = 0.472
+offset_left = -238.5
+offset_top = -266.944
+offset_right = 251.5
+offset_bottom = -213.944
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("9_y7yfv")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_3pgfy")
+text = "Complete this Java program that displays a student’s 
+digital ID card using variables."
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.127
+anchor_top = 0.3
+anchor_right = 1.127
+anchor_bottom = 0.3
+offset_left = -1193.3
+offset_top = -101.4
+offset_right = -624.308
+offset_bottom = 435.6
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 19
+text = "public class Main  {
+    public static void main(String[] args) {
+
+        String name = \"Juan Dela Cruz\";
+                     age = 20;
+                     course = \"BS Information Technology\";
+                      section = 'A';
+                      enrolled = true;
+
+        System.out.println(\"===== DIGITAL ID CARD =====\");
+        System.out.println(\"Name: \" +               );
+        System.out.println(\"Age: \" + age);
+        System.out.println(\"Course: \" + course);
+        System.out.println(\"Section: \" + section);
+        System.out.println(\"Currently Enrolled: \" + enrolled);
+    }
+}
+"
+metadata/_edit_lock_ = true
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828
+anchor_top = 0.478
+anchor_right = 0.828
+anchor_bottom = 0.478
+offset_left = -161.856
+offset_top = -363.744
+offset_right = 162.144
+offset_bottom = 325.256
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gdmq8")
+
+[node name="intL2button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.285
+anchor_top = 0.249
+anchor_right = 0.285
+anchor_bottom = 0.249
+offset_left = -37.34
+offset_top = -12.878
+offset_right = 16.66
+offset_bottom = 14.122
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "int"
+script = ExtResource("10_u1p1o")
+
+[node name="StringL2button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.77
+anchor_top = 0.246
+anchor_right = 0.77
+anchor_bottom = 0.246
+offset_left = -42.48
+offset_top = -13.012
+offset_right = 11.52
+offset_bottom = 12.988
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "string"
+script = ExtResource("10_4d762")
+
+[node name="charL2button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.503
+anchor_top = 0.248
+anchor_right = 0.503
+anchor_bottom = 0.248
+offset_left = -30.972
+offset_top = -12.256
+offset_right = 22.028
+offset_bottom = 13.744
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "char"
+script = ExtResource("11_4xjkb")
+
+[node name="booleanL2button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.706
+anchor_top = 0.341
+anchor_right = 0.706
+anchor_bottom = 0.341
+offset_left = -38.744
+offset_top = -14.102
+offset_right = 37.256
+offset_bottom = 12.898
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "boolean"
+script = ExtResource("12_y7yfv")
+
+[node name="nameL2button" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.294
+anchor_top = 0.343
+anchor_right = 0.294
+anchor_bottom = 0.343
+offset_left = -33.256
+offset_top = -14.346
+offset_right = 31.744
+offset_bottom = 13.654
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "name
+"
+script = ExtResource("14_cshl4")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.181
+anchor_right = 0.5
+anchor_bottom = 0.181
+offset_left = -99.0
+offset_top = -16.582
+offset_right = 103.0
+offset_bottom = 16.418
+theme_override_fonts/font = SubResource("FontVariation_nmjbr")
+theme_override_font_sizes/font_size = 25
+text = "Drag and Drop"
+horizontal_alignment = 1
+
+[node name="Clock" type="Sprite2D" parent="Panel2"]
+position = Vector2(60, 398)
+scale = Vector2(0.133, 0.1135)
+texture = ExtResource("9_3pgfy")
+
+[node name="TimeLabel" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 425.0
+offset_right = 83.0
+offset_bottom = 449.0
+theme_override_fonts/font = SubResource("FontVariation_u11hg")
+theme_override_font_sizes/font_size = 19
+text = "5:00"
+horizontal_alignment = 1
+
+[node name="MistakesLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.73
+anchor_right = 0.5
+anchor_bottom = 0.73
+offset_left = -69.0
+offset_top = -17.97
+offset_right = 76.0
+offset_bottom = 18.03
+theme_override_fonts/font = ExtResource("8_y7yfv")
+
+[node name="Label4" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 533.0
+offset_right = 282.0
+offset_bottom = 576.0
+theme_override_fonts/font = ExtResource("8_y7yfv")
+text = "If you made 3 mistakes it's
+                       game over"
+
+[node name="ScoreLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.62
+anchor_top = 0.594
+anchor_right = 0.62
+anchor_bottom = 0.594
+offset_left = 0.119995
+offset_top = -28.266
+offset_right = 60.12
+offset_bottom = 36.734
+theme_override_fonts/font = SubResource("FontVariation_4d762")
+text = "Score:"
+
+[node name="HintButton" type="TextureButton" parent="Panel2"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 379.0
+offset_right = 165.0
+offset_bottom = 418.0
+texture_normal = ExtResource("17_5cmiv")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2"]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 420.0
+offset_right = 173.0
+offset_bottom = 443.0
+texture = ExtResource("18_gdmq8")
+expand_mode = 1
+
+[node name="HintLabel" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 424.0
+offset_right = 136.0
+offset_bottom = 439.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("19_baxob")
+
+[node name="Timer" type="Timer" parent="."]

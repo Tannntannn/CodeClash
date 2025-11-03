@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://r6xmm0vstvkn"]
+
+[ext_resource type="Script" uid="uid://bt3ek7bbotl8w" path="res://SoundManager.gd" id="1_gfqkc"]
+
+[node name="SoundManager" type="Node"]
+script = ExtResource("1_gfqkc")
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+
+[node name="Drop" type="AudioStreamPlayer" parent="."]

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dodjpv1n76aub"
+path="res://.godot/imported/hero-skill-attack-reveal-14-388922.mp3-0aac106d45ba0343c8e250b6141a9c50.mp3str"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/hero-skill-attack-reveal-14-388922.mp3"
+dest_files=["res://.godot/imported/hero-skill-attack-reveal-14-388922.mp3-0aac106d45ba0343c8e250b6141a9c50.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

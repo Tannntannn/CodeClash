@@ -1,0 +1,171 @@
+[gd_scene load_steps=6 format=3 uid="uid://daax8a0874xcg"]
+
+[ext_resource type="Script" uid="uid://rqxwtii7hrf3" path="res://Quiz Mode/popup scene/win_popup4.gd" id="1_wkta4"]
+[ext_resource type="Texture2D" uid="uid://bxwecm477q8lc" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_square_border 1.png" id="2_3j4uv"]
+[ext_resource type="Texture2D" uid="uid://duk2h5aq4lksm" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_depth_flat.png" id="3_p13ct"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="4_k54q1"]
+[ext_resource type="Texture2D" uid="uid://xdl86mhhlgoe" path="res://Assets/home.png" id="5_nrc0s"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wkta4")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -262.5
+offset_right = 264.0
+offset_bottom = 262.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3j4uv")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = -26.0
+offset_right = 461.0
+offset_bottom = 71.0
+texture = ExtResource("3_p13ct")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = -7.0
+offset_right = 81.0
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+theme_override_font_sizes/font_size = 57
+text = "VICTORY"
+
+[node name="Label2" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 74.5
+offset_right = 462.0
+offset_bottom = 120.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+theme_override_font_sizes/font_size = 34
+text = "CONDITIONAL AND STATEMENTS"
+
+[node name="Label3" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -102.5
+offset_right = 124.0
+offset_bottom = -56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+theme_override_font_sizes/font_size = 37
+text = "You finished the quiz"
+
+[node name="label4" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -14.5
+offset_right = 34.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+theme_override_font_sizes/font_size = 30
+text = "SCORE:"
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = 10.5
+offset_right = 98.0
+offset_bottom = 74.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_p13ct")
+
+[node name="Quit button" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.921
+anchor_top = 0.509
+anchor_right = 1.921
+anchor_bottom = 0.509
+offset_left = -791.288
+offset_top = 99.275
+offset_right = -714.288
+offset_bottom = 167.275
+pivot_offset = Vector2(2, 2)
+texture_normal = ExtResource("5_nrc0s")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="label4" type="Label" parent="TextureRect/Quit button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = 36.0
+offset_right = 55.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+text = "Return to Selection"
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 544.0
+offset_top = 346.0
+offset_right = 610.0
+offset_bottom = 384.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_k54q1")
+theme_override_font_sizes/font_size = 40
+
+[connection signal="pressed" from="TextureRect/Quit button" to="." method="_on_quit_button_pressed"]

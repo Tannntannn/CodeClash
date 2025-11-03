@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/btnManageAttempts"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingStart="14dp"
+    android:paddingEnd="14dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:text="Manage Attempts"
+    android:textStyle="bold"
+    android:textColor="#D32F2F"
+    android:background="@drawable/toolbar_action_pill"
+    android:layout_marginEnd="8dp"
+    android:maxLines="1"
+    android:ellipsize="end" />
+
+

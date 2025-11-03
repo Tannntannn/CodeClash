@@ -1,0 +1,110 @@
+[gd_scene load_steps=9 format=3 uid="uid://con77pak8pern"]
+
+[ext_resource type="Script" uid="uid://ckf23buco7ank" path="res://Lesson 1/lesson1output.gd" id="1_65xtx"]
+[ext_resource type="Texture2D" uid="uid://b4fvgooim1cox" path="res://Quiz Mode/Quiz assets/Lesson1.png" id="2_8pi36"]
+[ext_resource type="Texture2D" uid="uid://djsit1dr3ydct" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_border.png" id="3_65xtx"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="3_qg8ny"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vc66c"]
+texture = ExtResource("2_8pi36")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i2pvt"]
+texture = ExtResource("3_65xtx")
+
+[sub_resource type="FontVariation" id="FontVariation_8pi36"]
+base_font = ExtResource("3_qg8ny")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65xtx"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_65xtx")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(0.377919, 0.377919, 0.377919, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vc66c")
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.487
+anchor_top = 0.5
+anchor_right = 0.487
+anchor_bottom = 0.5
+offset_left = -348.024
+offset_top = -318.0
+offset_right = 370.976
+offset_bottom = 300.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_i2pvt")
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.257
+anchor_right = 0.5
+anchor_bottom = 0.257
+offset_left = -174.0
+offset_top = -15.939
+offset_right = 189.0
+offset_bottom = 16.061
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = SubResource("FontVariation_8pi36")
+theme_override_font_sizes/font_size = 21
+text = " OUTPUT OF THE SOLVED PROBLEM"
+
+[node name="Label" type="Label" parent="Panel/Panel/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.442
+anchor_top = 4.319
+anchor_right = 0.442
+anchor_bottom = 4.319
+offset_left = -58.946
+offset_top = -16.502
+offset_right = 59.054
+offset_bottom = 16.498
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+text = "Hello World"
+
+[node name="Button2" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(220, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.481
+anchor_top = 0.744
+anchor_right = 0.481
+anchor_bottom = 0.744
+offset_left = -110.112
+offset_top = -25.112
+offset_right = 109.888
+offset_bottom = 24.888
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.099986, 0.099986, 0.099986, 1)
+theme_override_fonts/font = ExtResource("3_qg8ny")
+theme_override_styles/normal = SubResource("StyleBoxFlat_65xtx")
+text = "Return"
+
+[connection signal="pressed" from="Panel/Button2" to="." method="_on_button_2_pressed"]

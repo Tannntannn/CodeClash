@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfx5ct0x3wbjp"]
+
+[ext_resource type="Script" uid="uid://bupcijqvllhl0" path="res://Lesson1/virusfireball1.gd" id="1_0c0u8"]
+[ext_resource type="Texture2D" uid="uid://bxqgfr2rx0qwk" path="res://assets/Lesson1_assets/shuriken1.png" id="2_0c0u8"]
+[ext_resource type="Texture2D" uid="uid://haa13etvjhax" path="res://assets/Lesson1_assets/shuriken2.png" id="3_66y4f"]
+[ext_resource type="Texture2D" uid="uid://bbjb57k3jhkvs" path="res://assets/Lesson1_assets/shuriken3.png" id="4_uybp3"]
+[ext_resource type="Texture2D" uid="uid://ba1t6bs4eypy8" path="res://assets/Lesson1_assets/shuriken4.png" id="5_81f4r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk87q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0c0u8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_66y4f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_uybp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_81f4r")
+}],
+"loop": true,
+"name": &"virusfireball",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gveuj"]
+size = Vector2(76, 87)
+
+[node name="VFireball" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_0c0u8")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(33, 1)
+scale = Vector2(0.246855, 0.246855)
+sprite_frames = SubResource("SpriteFrames_lk87q")
+animation = &"virusfireball"
+autoplay = "virusfireball"
+frame_progress = 1.0
+speed_scale = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(33, 2.5)
+shape = SubResource("RectangleShape2D_gveuj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

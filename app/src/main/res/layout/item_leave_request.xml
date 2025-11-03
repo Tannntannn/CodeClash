@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/request_item_background"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/studentNameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Student Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/requestTimeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Requested: Jan 01, 2024 12:00"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginBottom="12dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/rejectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reject"
+            android:textColor="@color/white"
+            android:background="@drawable/button_reject_background"
+            android:layout_marginEnd="8dp"
+            android:minWidth="80dp" />
+
+        <Button
+            android:id="@+id/approveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Approve"
+            android:textColor="@color/white"
+            android:background="@drawable/button_approve_background"
+            android:minWidth="80dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

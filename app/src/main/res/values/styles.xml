@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fullscreen AppCompat theme for Godot host -->
+    <style name="Theme.CodeClash.Fullscreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Hide system bars area; we'll also apply immersive flags at runtime -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
+
+
+
+

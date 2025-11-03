@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://x4v7ewjm0sg8"
+path="res://.godot/imported/3_knife_slash_c-92500.mp3-35ed5a6cc119676bcc1e69fcfbc8af64.mp3str"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/3_knife_slash_c-92500.mp3"
+dest_files=["res://.godot/imported/3_knife_slash_c-92500.mp3-35ed5a6cc119676bcc1e69fcfbc8af64.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

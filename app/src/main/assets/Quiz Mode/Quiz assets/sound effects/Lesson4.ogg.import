@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ddf6ohjjggqio"
+path="res://.godot/imported/Lesson4.ogg-ba5be08ea93604ccf751391cd0d1a6fa.oggvorbisstr"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/Lesson4.ogg"
+dest_files=["res://.godot/imported/Lesson4.ogg-ba5be08ea93604ccf751391cd0d1a6fa.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

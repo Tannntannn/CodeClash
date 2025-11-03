@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 🎮 GAMIFIED RED-GRAY PALETTE -->
+
+    <!-- Primary Game Colors -->
+    <color name="game_red_primary">#DC2626</color>      <!-- Bold red for primary actions -->
+    <color name="game_red_secondary">#EF4444</color>    <!-- Lighter red for accents -->
+    <color name="game_red_light">#FEE2E2</color>         <!-- Very light red for backgrounds -->
+    <color name="game_red_dark">#B91C1C</color>          <!-- Dark red for text/emphasis -->
+
+    <!-- Gray Scale for Game UI -->
+    <color name="game_gray_primary">#374151</color>      <!-- Primary gray text -->
+    <color name="game_gray_secondary">#6B7280</color>   <!-- Secondary gray text -->
+    <color name="game_gray_light">#F3F4F6</color>       <!-- Light gray backgrounds -->
+    <color name="game_gray_dark">#1F2937</color>         <!-- Dark gray for contrast -->
+    <color name="game_gray_border">#D1D5DB</color>      <!-- Border gray -->
+
+    <!-- Game UI Specific Colors -->
+    <color name="game_background">#FAFAFA</color>       <!-- Main background -->
+    <color name="game_card">#FFFFFF</color>              <!-- Card backgrounds -->
+    <color name="game_surface">#FFFFFF</color>           <!-- Surface color -->
+    <color name="game_text_primary">#1F2937</color>     <!-- Primary text -->
+    <color name="game_text_secondary">#6B7280</color>  <!-- Secondary text -->
+    <color name="game_text_muted">#9CA3AF</color>        <!-- Muted text -->
+
+    <!-- Game Status Colors -->
+    <color name="game_success">#10B981</color>           <!-- Success green -->
+    <color name="game_warning">#F59E0B</color>           <!-- Warning yellow -->
+    <color name="game_error">#EF4444</color>             <!-- Error red -->
+    <color name="game_info">#3B82F6</color>              <!-- Info blue -->
+
+    <!-- Legacy Compatibility (mapped to new colors) -->
+    <color name="red_100">#FEE2E2</color>               <!-- game_red_light -->
+    <color name="red_200">#FECACA</color>                <!-- Lighter red -->
+    <color name="red_500">#DC2626</color>                <!-- game_red_primary -->
+    <color name="red_600">#B91C1C</color>                <!-- game_red_dark -->
+
+    <color name="gray_50">#FAFAFA</color>               <!-- game_background -->
+    <color name="gray_100">#F3F4F6</color>              <!-- game_gray_light -->
+    <color name="gray_200">#E5E7EB</color>              <!-- Lighter gray -->
+    <color name="gray_400">#9CA3AF</color>               <!-- game_text_muted -->
+    <color name="gray_500">#6B7280</color>               <!-- game_gray_secondary -->
+    <color name="gray_600">#4B5563</color>               <!-- Medium gray -->
+    <color name="gray_800">#1F2937</color>               <!-- game_gray_dark -->
+
+    <!-- Standard Colors -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Additional Game Colors -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF370083</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="lavender">#8692f7</color>
+    
+    <!-- Request System Colors -->
+    <color name="primary_color">#DC2626</color>
+    <color name="background_color">#FAFAFA</color>
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="success_color">#10B981</color>
+    <color name="error_color">#EF4444</color>
+    <color name="border_color">#D1D5DB</color>
+</resources>

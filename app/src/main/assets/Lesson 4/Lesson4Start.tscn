@@ -1,0 +1,184 @@
+[gd_scene load_steps=12 format=3 uid="uid://chnnsys4tx85a"]
+
+[ext_resource type="Script" uid="uid://djmwxbd1b50gu" path="res://Lesson 4/lesson_4_start.gd" id="1_ujdbn"]
+[ext_resource type="Texture2D" uid="uid://bx1nhjmck5pr3" path="res://Quiz Mode/Quiz assets/Lesson4_assets/Frame 231 (1).png" id="2_qcmsp"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_le4eg"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="4_d5n23"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="4_ffiik"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="5_ljdxb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yx834"]
+texture = ExtResource("2_qcmsp")
+modulate_color = Color(0.629675, 0.629675, 0.629675, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e2yia"]
+texture = ExtResource("3_le4eg")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6l50g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vmyld"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xlhkj"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[node name="Lesson3Start" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ujdbn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yx834")
+
+[node name="Panel2" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -285.5
+offset_top = -345.5
+offset_right = 285.5
+offset_bottom = 345.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_e2yia")
+
+[node name="Label2" type="Label" parent="Panel/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 2.372
+anchor_right = 0.5
+anchor_bottom = 2.372
+offset_left = -177.0
+offset_top = -1421.55
+offset_right = 187.0
+offset_bottom = -1358.55
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85098, 0.85098, 0.882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_d5n23")
+theme_override_font_sizes/font_size = 25
+text = "         Complete the missing codes
+           before the time runs out!"
+
+[node name="Label3" type="Label" parent="Panel/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.275
+anchor_right = 0.5
+anchor_bottom = 0.275
+offset_left = -164.0
+offset_top = -80.525
+offset_right = 188.0
+offset_bottom = -41.525
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.839216, 0.85098, 0.898039, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_d5n23")
+theme_override_font_sizes/font_size = 25
+text = "CONDITIONAL STATEMENTS"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Panel/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.529
+anchor_top = 3.079
+anchor_right = 0.529
+anchor_bottom = 3.079
+offset_left = -42.559
+offset_top = -1648.09
+offset_right = 10.441
+offset_bottom = -1620.09
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85098, 0.858824, 0.905882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_d5n23")
+theme_override_font_sizes/font_size = 23
+text = "5:00"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Panel/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.275
+anchor_right = 0.5
+anchor_bottom = 0.275
+offset_left = -146.0
+offset_top = -19.525
+offset_right = 154.0
+offset_bottom = 19.475
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.839216, 0.85098, 0.898039, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_d5n23")
+theme_override_font_sizes/font_size = 25
+text = "Complete the missing codes!"
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.475
+anchor_top = 3.487
+anchor_right = 0.475
+anchor_bottom = 3.487
+offset_left = -26.725
+offset_top = -2019.02
+offset_right = 425.275
+offset_bottom = -1599.02
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.179117, 0.190365)
+texture = ExtResource("5_ljdxb")
+expand_mode = 1
+
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.813
+anchor_right = 0.5
+anchor_bottom = 0.813
+offset_left = -64.0
+offset_top = -25.824
+offset_right = 70.0
+offset_bottom = 26.176
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_ffiik")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6l50g")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vmyld")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xlhkj")
+text = "Start"
+
+[connection signal="pressed" from="Panel/Button" to="." method="_on_button_pressed"]

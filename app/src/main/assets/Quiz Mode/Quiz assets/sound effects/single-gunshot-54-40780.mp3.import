@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d3v5v4ln6mqc2"
+path="res://.godot/imported/single-gunshot-54-40780.mp3-78f9a088b34d150f7218ed45962790a0.mp3str"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/single-gunshot-54-40780.mp3"
+dest_files=["res://.godot/imported/single-gunshot-54-40780.mp3-78f9a088b34d150f7218ed45962790a0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

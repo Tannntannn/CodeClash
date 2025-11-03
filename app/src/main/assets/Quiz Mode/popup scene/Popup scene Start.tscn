@@ -1,0 +1,121 @@
+[gd_scene load_steps=7 format=3 uid="uid://c88r37jcd0r14"]
+
+[ext_resource type="Script" uid="uid://cu01q34gueoba" path="res://Quiz Mode/popup scene/popup_scene_start.gd" id="1_b3x5r"]
+[ext_resource type="Texture2D" uid="uid://djsit1dr3ydct" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_border.png" id="1_yq4mj"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="2_kbpq2"]
+[ext_resource type="Texture2D" uid="uid://ckohktdet7i7f" path="res://Quiz Mode/Quiz assets/Lesson2_assets/Button.png" id="3_kbpq2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3x5r"]
+texture = ExtResource("1_yq4mj")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b3x5r"]
+bg_color = Color(0.666667, 0.666667, 0.666667, 0)
+
+[node name="PopupSceneStart" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b3x5r")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(700, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 353.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_b3x5r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.336989, 0.345059)
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -294.0
+offset_top = -100.0
+offset_right = 306.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.00676, 1.01952)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.716296, 0.716296, 0.716296, 1)
+theme_override_colors/font_outline_color = Color(0.93845, 0.93845, 0.93845, 1)
+theme_override_fonts/font = ExtResource("2_kbpq2")
+theme_override_font_sizes/font_size = 30
+text = "Get ready for 15 thrilling questions!
+ Choose the right answers to score big. 
+You’ve got 3 powerful hints use them smartly. 
+But beware… time is secretly running out with
+ a hidden 15-second countdown!"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+offset_left = 390.0
+offset_top = 94.0
+offset_right = 771.0
+offset_bottom = 223.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.851769, 0.851769, 0.851769, 1)
+theme_override_colors/font_outline_color = Color(0.991164, 0.991164, 0.991164, 1)
+theme_override_fonts/font = ExtResource("2_kbpq2")
+theme_override_font_sizes/font_size = 31
+text = "
+
+Instrusction on playing the game
+"
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 443.0
+offset_top = 432.0
+offset_right = 705.0
+offset_bottom = 515.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_b3x5r")
+icon = ExtResource("3_kbpq2")
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0001
+offset_top = 131.0
+offset_right = 55.9999
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.00676, 1.01952)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_kbpq2")
+theme_override_font_sizes/font_size = 33
+text = "Start Game"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

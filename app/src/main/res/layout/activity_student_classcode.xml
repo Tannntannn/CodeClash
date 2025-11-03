@@ -1,0 +1,242 @@
+<!-- 🎮 GAMIFIED JOIN CLASS ACTIVITY -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/game_background"
+    tools:context=".StudentClasscode">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 🎯 GAME HEADER -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/headerCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/game_red_primary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_arrow_back"
+                    android:contentDescription="Back"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🎓 JOIN CLASS"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:letterSpacing="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🎮"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 🎯 GAME LOGO -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/logoCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@color/game_card"
+            app:layout_constraintTop_toBottomOf="@id/headerCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/logoImage"
+                android:layout_width="200dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:contentDescription="Code Clash Logo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/newlogo"
+                android:padding="20dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 🎮 GAME FORM -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/formContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/game_card"
+            app:layout_constraintTop_toBottomOf="@id/logoCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+                <!-- 🎯 FORM TITLE -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginBottom="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎮 JOIN THE GAME"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/game_red_primary"
+                        android:letterSpacing="0.1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enter your class details to start playing!"
+                        android:textSize="14sp"
+                        android:textColor="@color/game_text_secondary"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <!-- 🎯 CLASS CODE INPUT -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="🎯 Class Code"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxStrokeColor="@color/game_red_primary"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="@color/game_red_primary"
+                    app:startIconDrawable="@android:drawable/ic_menu_edit"
+                    app:startIconTint="@color/game_red_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextClassCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="text"
+                        android:textColor="@color/game_text_primary"
+                        android:textColorHint="@color/game_text_muted" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🎓 YEAR INPUT -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:hint="Year Level"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxStrokeColor="@color/game_red_primary"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="@color/game_red_primary"
+                    app:startIconDrawable="@android:drawable/ic_menu_agenda"
+                    app:startIconTint="@color/game_red_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextYear"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="text"
+                        android:textColor="@color/game_text_primary"
+                        android:textColorHint="@color/game_text_muted" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🏷️ BLOCK INPUT -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:hint="🏷️ Block"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="16dp"
+                    app:boxCornerRadiusTopEnd="16dp"
+                    app:boxCornerRadiusBottomStart="16dp"
+                    app:boxCornerRadiusBottomEnd="16dp"
+                    app:boxStrokeColor="@color/game_red_primary"
+                    app:boxStrokeWidth="2dp"
+                    app:hintTextColor="@color/game_red_primary"
+                    app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
+                    app:startIconTint="@color/game_red_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextBlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="text"
+                        android:textColor="@color/game_text_primary"
+                        android:textColorHint="@color/game_text_muted" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 🎮 JOIN BUTTON -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonJoinClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    android:text="🎮 JOIN CLASS"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/game_red_primary"
+                    app:cornerRadius="20dp"
+                    app:elevation="8dp"
+                    app:rippleColor="@color/game_red_light"
+                    android:letterSpacing="0.1" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

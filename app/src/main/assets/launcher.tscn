@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://qq6nnxmasfkv"]
+
+[ext_resource type="Script" uid="uid://bpk46rk2bfaxk" path="res://launcher.gd" id="1"]
+
+[node name="Launcher" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1")

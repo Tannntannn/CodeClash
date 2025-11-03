@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://c8jsvxblqic58"]
+
+[ext_resource type="Script" uid="uid://bkjr63sphl2n1" path="res://lesson 2/prolem_solved_L2.gd" id="1_ns8w5"]
+[ext_resource type="Texture2D" uid="uid://djsit1dr3ydct" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_border.png" id="2_13qyw"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="2_ns8w5"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="4_crmyf"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_13qyw"]
+texture = ExtResource("2_13qyw")
+
+[sub_resource type="FontVariation" id="FontVariation_crmyf"]
+base_font = ExtResource("2_ns8w5")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2a5qp"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[node name="ProlemSolvedL2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ns8w5")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -317.0
+offset_right = 284.0
+offset_bottom = 303.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_13qyw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_crmyf")
+theme_override_font_sizes/font_size = 37
+text = "Lesson 
+problem 
+solved
+"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="."]
+custom_minimum_size = Vector2(220, 50)
+layout_mode = 2
+offset_left = 455.0
+offset_top = 440.0
+offset_right = 675.0
+offset_bottom = 490.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0.114897, 0.114897, 0.114897, 1)
+theme_override_fonts/font = ExtResource("4_crmyf")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_2a5qp")
+text = "See the ouput"
+
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

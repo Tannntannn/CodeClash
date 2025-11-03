@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/greybg"
+    tools:context=".CompilerModeActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/red_500"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Compiler Mode"
+        app:titleTextColor="#FFFFFF" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Problem Description Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/problemCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/problemTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lesson Task"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_500"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/problemDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Task details will appear here."
+                        android:textSize="13sp"
+                        android:textColor="#333333" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Code Editor Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Java Code Editor"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginBottom="8dp" />
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:background="@android:color/transparent"
+                        android:scrollbars="vertical">
+
+                        <EditText
+                            android:id="@+id/codeEditor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="monospace"
+                            android:gravity="top|start"
+                            android:hint="Write your Java code here..."
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:padding="12dp"
+                            android:textColor="#333333"
+                            android:textColorHint="#888888"
+                            android:textSize="14sp"
+                            android:scrollbars="none"
+                            android:textCursorDrawable="@null"
+                            android:importantForAutofill="no"
+                            android:privateImeOptions="nm"
+                            android:textIsSelectable="true"
+                            android:minHeight="300dp" />
+
+                    </ScrollView>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+
+
+            <!-- Control Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRun"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="Run &amp; Test"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/red_500"
+                    app:cornerRadius="8dp"
+                    app:icon="@android:drawable/ic_media_play"
+                    app:iconTint="#FFFFFF" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnClear"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:text="Clear"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/gray_400"
+                    app:cornerRadius="8dp"
+                    app:icon="@android:drawable/ic_menu_delete"
+                    app:iconTint="#FFFFFF" />
+
+            </LinearLayout>
+
+            <!-- Output Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Console"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginBottom="8dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="#F5F5F5"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/outputText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Output will appear here..."
+                            android:textColor="#333333"
+                            android:textSize="12sp" />
+
+                        <!-- Contextual hint for interactive programs -->
+                        <TextView
+                            android:id="@+id/inputHintText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="This program expects input. Type the values below (one per line) before running."
+                            android:textColor="@color/red_500"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+
+                        <EditText
+                            android:id="@+id/inputEditor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:fontFamily="monospace"
+                            android:hint="Program input (one per line)"
+                            android:inputType="textMultiLine|textNoSuggestions"
+                            android:textColor="#333333"
+                            android:textColorHint="#888888"
+                            android:textSize="12sp" />
+
+                        <!-- Input actions -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnLoadSampleInput"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Load sample input"
+                                android:textAllCaps="false"
+                                android:textSize="12sp"
+                                android:backgroundTint="@color/gray_400"
+                                android:textColor="#FFFFFF" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnClearInput"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="8dp"
+                                android:text="Clear input"
+                                android:textAllCaps="false"
+                                android:textSize="12sp"
+                                android:backgroundTint="@color/gray_400"
+                                android:textColor="#FFFFFF" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Loading Progress -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

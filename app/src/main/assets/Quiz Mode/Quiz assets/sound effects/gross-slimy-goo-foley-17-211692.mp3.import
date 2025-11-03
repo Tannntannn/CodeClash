@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bjpwdy22ooftn"
+path="res://.godot/imported/gross-slimy-goo-foley-17-211692.mp3-9997bf6724e89f0423c3da848de03c90.mp3str"
+
+[deps]
+
+source_file="res://Quiz Mode/Quiz assets/sound effects/gross-slimy-goo-foley-17-211692.mp3"
+dest_files=["res://.godot/imported/gross-slimy-goo-foley-17-211692.mp3-9997bf6724e89f0423c3da848de03c90.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

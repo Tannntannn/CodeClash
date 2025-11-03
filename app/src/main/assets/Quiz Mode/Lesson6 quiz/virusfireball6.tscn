@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://yq4g0k032a5a"]
+
+[ext_resource type="Texture2D" uid="uid://p4gmuxw316kb" path="res://assets/Lesson6_assets/l6vas1.png" id="1_01tii"]
+[ext_resource type="Script" uid="uid://e58a3itsrtp8" path="res://Lesson6/virusfireball6.gd" id="1_cdhoj"]
+[ext_resource type="Texture2D" uid="uid://vlgrio1retqm" path="res://assets/Lesson6_assets/l6vas2.png" id="2_cdhoj"]
+[ext_resource type="Texture2D" uid="uid://cl4j622phvnvi" path="res://assets/Lesson6_assets/l6vas3.png" id="3_fx7da"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oud4q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_01tii")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_cdhoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fx7da")
+}],
+"loop": true,
+"name": &"virusfireball",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gveuj"]
+size = Vector2(76, 87)
+
+[node name="VFireball" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_cdhoj")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(33, 1)
+scale = Vector2(0.246855, 0.246855)
+sprite_frames = SubResource("SpriteFrames_oud4q")
+animation = &"virusfireball"
+autoplay = "virusfireball"
+speed_scale = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(33, 2.5)
+shape = SubResource("RectangleShape2D_gveuj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,411 @@
+[gd_scene load_steps=20 format=3 uid="uid://ua0ljfrdnwtu"]
+
+[ext_resource type="Script" uid="uid://d2bv0dsdalfrd" path="res://Lesson 6/lesson_6.gd" id="1_835gk"]
+[ext_resource type="Texture2D" uid="uid://bw17rqbuekiqw" path="res://Assets/bg lesson6.png" id="2_835gk"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_c3nfe"]
+[ext_resource type="Script" uid="uid://js0emcqrooou" path="res://Lesson 4/Panels_L4.gd" id="4_6ubyt"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="5_c3nfe"]
+[ext_resource type="Script" uid="uid://bjl5desfysfds" path="res://Lesson 4/Button_L4.gd" id="6_3ygiq"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="7_f4l3p"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="8_4g0oy"]
+[ext_resource type="Texture2D" uid="uid://ggd2016ok2g8" path="res://Quiz Mode/Quiz assets/hintbulb.png" id="9_6ubyt"]
+[ext_resource type="Texture2D" uid="uid://cxdjg51rb310" path="res://Quiz Mode/Quiz assets/hintnum.png" id="10_35145"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="11_3ygiq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cshl4"]
+texture = ExtResource("2_835gk")
+modulate_color = Color(0.400698, 0.400698, 0.400698, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5cmiv"]
+texture = ExtResource("3_c3nfe")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j5br3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gdmq8"]
+texture = ExtResource("3_c3nfe")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_baxob"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="FontVariation" id="FontVariation_nmjbr"]
+base_font = ExtResource("7_f4l3p")
+
+[sub_resource type="FontVariation" id="FontVariation_u11hg"]
+base_font = ExtResource("7_f4l3p")
+
+[sub_resource type="FontVariation" id="FontVariation_4d762"]
+base_font = ExtResource("7_f4l3p")
+
+[node name="Lesson6" type="Control" groups=["GameController"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_835gk")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 1.0
+offset_right = 3.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cshl4")
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.339
+anchor_top = 0.5
+anchor_right = 0.339
+anchor_bottom = 0.5
+offset_left = -368.528
+offset_top = -341.0
+offset_right = 364.472
+offset_bottom = 345.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5cmiv")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/Panel"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 236.0
+offset_right = 680.0
+offset_bottom = 587.0
+
+[node name="CodeArea" type="Panel" parent="Panel/Panel/ScrollContainer"]
+custom_minimum_size = Vector2(0, 1000)
+layout_mode = 2
+
+[node name="int[]L6" type="Panel" parent="Panel/Panel/ScrollContainer/CodeArea" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 295.0
+offset_right = 120.0
+offset_bottom = 324.0
+script = ExtResource("4_6ubyt")
+allowed_button_name = "int[]buttonL6"
+
+[node name="int[n]L6" type="Panel" parent="Panel/Panel/ScrollContainer/CodeArea" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 294.0
+offset_right = 321.0
+offset_bottom = 324.0
+script = ExtResource("4_6ubyt")
+allowed_button_name = "int[n]buttonL6"
+
+[node name="inti=0;L6" type="Panel" parent="Panel/Panel/ScrollContainer/CodeArea" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 125.0
+offset_top = 408.0
+offset_right = 194.0
+offset_bottom = 439.0
+script = ExtResource("4_6ubyt")
+allowed_button_name = "inti=0;buttonL6"
+
+[node name="intergerMAX_VALUE;L6" type="Panel" parent="Panel/Panel/ScrollContainer/CodeArea" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 350.0
+offset_right = 557.0
+offset_bottom = 383.0
+script = ExtResource("4_6ubyt")
+allowed_button_name = "integermaxvaluebuttonl6"
+
+[node name="n;i++L6" type="Panel" parent="Panel/Panel/ScrollContainer/CodeArea" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 230.0
+offset_top = 405.0
+offset_right = 297.0
+offset_bottom = 436.0
+script = ExtResource("4_6ubyt")
+allowed_button_name = "n;i++buttonL6"
+
+[node name="Label" type="Label" parent="Panel/Panel/ScrollContainer/CodeArea"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 41.0
+offset_top = 56.0
+offset_right = 654.0
+offset_bottom = 983.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 19
+text = "import java.util.Scanner;
+public class StudentGradeManager {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print(\"How many students? \");
+        int n = sc.nextInt();
+
+                  grades = new 
+        int sum = 0, pass = 0, fail = 0;
+        int max = Integer.MIN_VALUE, min = 
+
+        for (                 i <                ) {
+            System.out.print(\"Enter grade of student \" + (i + 1) + \": \");
+            grades[i] = sc.nextInt();
+
+            sum += grades[i];
+            if (grades[i] >= 60) pass++; else fail++;
+            if (grades[i] > max) max = grades[i];
+            if (grades[i] < min) min = grades[i];
+        }
+
+        double average = (double) sum / n;
+        System.out.println(\"Average Grade: \" + average);
+        System.out.println(\"Highest Grade: \" + max);
+        System.out.println(\"Lowest Grade: \" + min);
+        System.out.println(\"Passed: \" + pass);
+        System.out.println(\"Failed: \" + fail);
+    }
+}
+ "
+metadata/_edit_lock_ = true
+
+[node name="Label2" type="Label" parent="Panel/Panel"]
+layout_mode = 0
+offset_left = 54.0
+offset_top = 97.0
+offset_right = 659.0
+offset_bottom = 206.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_c3nfe")
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_j5br3")
+text = "Complete this Java program that manages student grades
+ by storing them in an array and 
+displaying the average, highest,
+ lowest, number of passes, and number of fails."
+horizontal_alignment = 1
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828
+anchor_top = 0.478
+anchor_right = 0.828
+anchor_bottom = 0.478
+offset_left = -161.856
+offset_top = -365.744
+offset_right = 162.144
+offset_bottom = 311.256
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gdmq8")
+
+[node name="int[]buttonL6" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.199
+anchor_top = 0.239
+anchor_right = 0.199
+anchor_bottom = 0.239
+offset_left = -26.476
+offset_top = -12.803
+offset_right = 34.524
+offset_bottom = 20.197
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "int[]"
+script = ExtResource("6_3ygiq")
+
+[node name="integermaxvaluebuttonl6" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.582
+anchor_top = 0.321
+anchor_right = 0.582
+anchor_bottom = 0.321
+offset_left = -78.568
+offset_top = -22.317
+offset_right = 110.432
+offset_bottom = 15.683
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "integer.MAX_VALUE;"
+script = ExtResource("6_3ygiq")
+
+[node name="int[n]buttonL6" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.468
+anchor_top = 0.242
+anchor_right = 0.468
+anchor_bottom = 0.242
+offset_left = -32.632
+offset_top = -15.834
+offset_right = 31.368
+offset_bottom = 18.166
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "int[n]; "
+script = ExtResource("6_3ygiq")
+
+[node name="n;i++buttonL6" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.761
+anchor_top = 0.232
+anchor_right = 0.761
+anchor_bottom = 0.232
+offset_left = -35.564
+offset_top = -14.304
+offset_right = 33.436
+offset_bottom = 23.696
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "n;i++"
+script = ExtResource("6_3ygiq")
+
+[node name="inti=0;buttonL6" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.31
+anchor_right = 0.2
+anchor_bottom = 0.31
+offset_left = -37.8
+offset_top = -14.82
+offset_right = 36.2
+offset_bottom = 21.18
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_baxob")
+text = "int i = 0;"
+script = ExtResource("6_3ygiq")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.258
+anchor_top = 0.037
+anchor_right = 0.258
+anchor_bottom = 0.037
+offset_left = -20.592
+offset_top = 72.986
+offset_right = 181.408
+offset_bottom = 105.986
+theme_override_fonts/font = SubResource("FontVariation_nmjbr")
+theme_override_font_sizes/font_size = 25
+text = "Drag and Drop"
+horizontal_alignment = 1
+
+[node name="Clock" type="Sprite2D" parent="Panel2"]
+position = Vector2(68.25, 390.375)
+scale = Vector2(0.133, 0.1135)
+texture = ExtResource("8_4g0oy")
+
+[node name="TimeLabel" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 43.25
+offset_top = 424.375
+offset_right = 93.25
+offset_bottom = 448.375
+theme_override_fonts/font = SubResource("FontVariation_u11hg")
+theme_override_font_sizes/font_size = 19
+text = "5:00"
+horizontal_alignment = 1
+
+[node name="MistakesLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.512
+anchor_top = 0.632
+anchor_right = 0.512
+anchor_bottom = 0.632
+offset_left = -72.888
+offset_top = 58.136
+offset_right = 72.112
+offset_bottom = 94.136
+theme_override_fonts/font = ExtResource("7_f4l3p")
+
+[node name="Label4" type="Label" parent="Panel2"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 524.0
+offset_right = 279.0
+offset_bottom = 567.0
+theme_override_fonts/font = ExtResource("7_f4l3p")
+text = "If you made 3 mistakes it's
+                       game over"
+
+[node name="ScoreLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.642
+anchor_top = 0.6
+anchor_right = 0.642
+anchor_bottom = 0.6
+offset_left = 16.992
+offset_top = -32.2
+offset_right = 78.992
+offset_bottom = 35.8
+theme_override_fonts/font = SubResource("FontVariation_4d762")
+text = "Score:"
+
+[node name="HintButton" type="TextureButton" parent="Panel2"]
+layout_mode = 0
+offset_left = 141.0
+offset_top = 372.0
+offset_right = 175.0
+offset_bottom = 417.0
+texture_normal = ExtResource("9_6ubyt")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2"]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 422.0
+offset_right = 185.0
+offset_bottom = 443.0
+texture = ExtResource("10_35145")
+expand_mode = 1
+
+[node name="HintLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.603
+anchor_top = 1.267
+anchor_right = 0.603
+anchor_bottom = 1.267
+offset_left = -56.372
+offset_top = -432.759
+offset_right = -43.372
+offset_bottom = -417.759
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_3ygiq")
+text = " "
+
+[node name="Timer" type="Timer" parent="."]

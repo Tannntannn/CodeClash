@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <!-- Icon Container -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/connection_icon_background">
+
+            <ImageView
+                android:id="@+id/connectionIcon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseline_wifi_off_24"
+                android:contentDescription="Connection status"
+                android:tint="@android:color/white" />
+
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/connectionTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connection Issue"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium" />
+
+        <!-- Message -->
+        <TextView
+            android:id="@+id/connectionMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please check your connection and try again."
+            android:textSize="16sp"
+            android:textColor="#666666"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="sans-serif" />
+
+        <!-- Buttons Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <!-- Primary Action Button -->
+            <Button
+                android:id="@+id/retryButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Retry"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:background="@drawable/connection_primary_button"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Secondary Actions Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:textSize="14sp"
+                    android:textColor="#666666"
+                    android:background="@drawable/connection_secondary_button"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="sans-serif" />
+
+                <Button
+                    android:id="@+id/offlineButton"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:text="Work Offline"
+                    android:textSize="13dp"
+                    android:textColor="#666666"
+                    android:background="@drawable/connection_secondary_button"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

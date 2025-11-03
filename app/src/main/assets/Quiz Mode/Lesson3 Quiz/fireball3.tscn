@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://ca6pk2qjvlg7k"]
+
+[ext_resource type="Script" uid="uid://bwjbnhonpupnu" path="res://Quiz Mode/Lesson3 Quiz/fireball3.gd" id="1_v5gel"]
+[ext_resource type="Texture2D" uid="uid://0v1ldl51puvx" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites1.png" id="2_ga158"]
+[ext_resource type="Texture2D" uid="uid://deqxfhykf4jo5" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites2.png" id="3_racbj"]
+[ext_resource type="Texture2D" uid="uid://ypw4swm17ufy" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites3.png" id="4_co1bh"]
+[ext_resource type="Texture2D" uid="uid://cvb3owt4ufqyc" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites4.png" id="5_u3j7j"]
+[ext_resource type="Texture2D" uid="uid://b4tak8yy4pdbf" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites5.png" id="6_gxcnd"]
+[ext_resource type="Texture2D" uid="uid://d1c0d8qalq2na" path="res://Quiz Mode/Quiz assets/Lesson3_assets/lightning sprites6.png" id="7_c2jmy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk87q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ga158")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_racbj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_co1bh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_u3j7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_gxcnd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_c2jmy")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gveuj"]
+size = Vector2(139.5, 119)
+
+[node name="Fireball" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_v5gel")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(87, -1)
+scale = Vector2(0.180438, 0.180438)
+sprite_frames = SubResource("SpriteFrames_lk87q")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 1.0
+speed_scale = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(85.25, -3)
+shape = SubResource("RectangleShape2D_gveuj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

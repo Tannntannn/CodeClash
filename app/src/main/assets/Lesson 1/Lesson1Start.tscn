@@ -1,0 +1,183 @@
+[gd_scene load_steps=11 format=3 uid="uid://kvssommxvbe4"]
+
+[ext_resource type="Script" uid="uid://bps0a7il33o0u" path="res://Lesson 1/start.gd" id="1_dms5f"]
+[ext_resource type="Texture2D" uid="uid://b4fvgooim1cox" path="res://Quiz Mode/Quiz assets/Lesson1.png" id="2_2yfpt"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_2yfpt"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="4_gjnmo"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="5_1ep6x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62e2m"]
+texture = ExtResource("2_2yfpt")
+modulate_color = Color(0.400698, 0.400698, 0.400698, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gx2gx"]
+texture = ExtResource("3_2yfpt")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhal0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gx2gx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhal0"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dms5f")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 5.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_62e2m")
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -266.0
+offset_right = 322.0
+offset_bottom = 319.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_gx2gx")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.275
+anchor_right = 0.5
+anchor_bottom = 0.275
+offset_left = -154.0
+offset_top = 3.45
+offset_right = 146.0
+offset_bottom = 42.45
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.839216, 0.85098, 0.898039, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gjnmo")
+theme_override_font_sizes/font_size = 25
+text = "Complete the missing codes!"
+
+[node name="Label" type="Label" parent="Panel2/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.275
+anchor_right = 0.5
+anchor_bottom = 0.275
+offset_left = -157.0
+offset_top = -81.725
+offset_right = 143.0
+offset_bottom = -42.725
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.839216, 0.85098, 0.898039, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gjnmo")
+theme_override_font_sizes/font_size = 25
+text = "Introduction To Java"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.394
+anchor_right = 0.5
+anchor_bottom = 0.397
+offset_left = -169.0
+offset_top = -17.428
+offset_right = 195.0
+offset_bottom = 40.886
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85098, 0.85098, 0.882353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gjnmo")
+theme_override_font_sizes/font_size = 23
+text = "         Complete the missing codes
+           before the time runs out!"
+
+[node name="Label2" type="Label" parent="Panel2/Label2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.394
+anchor_right = 0.5
+anchor_bottom = 0.394
+offset_left = -37.0
+offset_top = 137.36
+offset_right = 16.0
+offset_bottom = 165.36
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.85098, 0.858824, 0.905882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gjnmo")
+theme_override_font_sizes/font_size = 23
+text = "5:00"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.519
+anchor_top = 0.764
+anchor_right = 0.519
+anchor_bottom = 0.764
+offset_left = -66.888
+offset_top = -1.07199
+offset_right = 67.112
+offset_bottom = 50.928
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.273873, 0.273873, 0.273873, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_gjnmo")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xhal0")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gx2gx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xhal0")
+text = "Start"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.51
+anchor_top = 0.603
+anchor_right = 0.51
+anchor_bottom = 0.603
+offset_left = -32.52
+offset_top = -40.744
+offset_right = 419.48
+offset_bottom = 379.256
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.179117, 0.190365)
+texture = ExtResource("5_1ep6x")
+expand_mode = 1
+
+[connection signal="pressed" from="Button" to="." method="_on_start_pressed"]

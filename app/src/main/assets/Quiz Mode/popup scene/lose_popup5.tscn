@@ -1,0 +1,182 @@
+[gd_scene load_steps=6 format=3 uid="uid://cuhtlykubigxq"]
+
+[ext_resource type="Texture2D" uid="uid://bxwecm477q8lc" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_square_border 1.png" id="1_cmodn"]
+[ext_resource type="Script" uid="uid://cm2eihy41bw8h" path="res://Quiz Mode/popup scene/lose_popup5.gd" id="1_eqyjf"]
+[ext_resource type="Texture2D" uid="uid://duk2h5aq4lksm" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_depth_flat.png" id="2_eqyjf"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="3_fe2dv"]
+[ext_resource type="Texture2D" uid="uid://xdl86mhhlgoe" path="res://Assets/home.png" id="5_h2kvx"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eqyjf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -262.5
+offset_right = 264.0
+offset_bottom = 262.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_cmodn")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="TextureRect"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = -26.0
+offset_right = 461.0
+offset_bottom = 71.0
+texture = ExtResource("2_eqyjf")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.0
+offset_top = -7.0
+offset_right = 81.0
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.0823529, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 57
+text = "DEFEAT!"
+
+[node name="Label2" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 79.5
+offset_right = 440.0
+offset_bottom = 125.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 45
+text = "LOOPING SRTUCTURES"
+
+[node name="Label3" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -118.0
+offset_top = -102.5
+offset_right = 124.0
+offset_bottom = -56.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0.137255, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 37
+text = "Your Player died!"
+
+[node name="label4" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -14.5
+offset_right = 34.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 30
+text = "SCORE:"
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = 10.5
+offset_right = 98.0
+offset_bottom = 74.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_eqyjf")
+
+[node name="Quit button" type="TextureButton" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.921
+anchor_top = 0.509
+anchor_right = 1.921
+anchor_bottom = 0.509
+offset_left = -794.288
+offset_top = 98.275
+offset_right = -717.288
+offset_bottom = 166.275
+pivot_offset = Vector2(2, 2)
+texture_normal = ExtResource("5_h2kvx")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="label4" type="Label" parent="TextureRect/Quit button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.5
+offset_top = 36.0
+offset_right = 55.5
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+text = "Return to Selection"
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 549.0
+offset_top = 345.5
+offset_right = 615.0
+offset_bottom = 383.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 40
+
+[node name="RetriesLeftLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 483.0
+offset_top = 491.0
+offset_right = 571.0
+offset_bottom = 511.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fe2dv")
+theme_override_font_sizes/font_size = 20
+
+[connection signal="pressed" from="TextureRect/Quit button" to="." method="_on_quit_button_pressed"]

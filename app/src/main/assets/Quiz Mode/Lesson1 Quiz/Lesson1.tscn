@@ -1,0 +1,449 @@
+[gd_scene load_steps=40 format=3 uid="uid://ccmnowl73vklr"]
+
+[ext_resource type="Script" uid="uid://d12bk653ahsbh" path="res://Quiz Mode/Lesson1 Quiz/Lesson1.gd" id="1_t7mfd"]
+[ext_resource type="Texture2D" uid="uid://b4fvgooim1cox" path="res://Quiz Mode/Quiz assets/Lesson1.png" id="2_wgy5m"]
+[ext_resource type="Texture2D" uid="uid://cqwyarpu34ot" path="res://Quiz Mode/Quiz assets/Lesson2_assets/question bar.png" id="3_agu2e"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="4_5y8ai"]
+[ext_resource type="Texture2D" uid="uid://ckohktdet7i7f" path="res://Quiz Mode/Quiz assets/Lesson2_assets/Button.png" id="5_rm1jq"]
+[ext_resource type="AudioStream" uid="uid://d3v5v4ln6mqc2" path="res://Quiz Mode/Quiz assets/sound effects/single-gunshot-54-40780.mp3" id="6_neybv"]
+[ext_resource type="AudioStream" uid="uid://x4v7ewjm0sg8" path="res://Quiz Mode/Quiz assets/sound effects/3_knife_slash_c-92500.mp3" id="7_wd54x"]
+[ext_resource type="Texture2D" uid="uid://b1pm1edoe2wj7" path="res://Quiz Mode/Quiz assets/Lesson1_assets/ATTACK1.png" id="8_xxx7p"]
+[ext_resource type="Texture2D" uid="uid://dgwh2yf2fosg8" path="res://Quiz Mode/Quiz assets/Lesson1_assets/ATTACK3.png" id="10_wgy5m"]
+[ext_resource type="Texture2D" uid="uid://bqw2hei04amm0" path="res://Quiz Mode/Quiz assets/Lesson1_assets/DEAD1.png" id="11_egmre"]
+[ext_resource type="Texture2D" uid="uid://b8gplkgwu4y4e" path="res://Quiz Mode/Quiz assets/Lesson1_assets/DEAD2.png" id="12_txf3g"]
+[ext_resource type="Texture2D" uid="uid://b2s7iyrg8laj1" path="res://Quiz Mode/Quiz assets/Lesson1_assets/DEAD3.png" id="13_1g4t7"]
+[ext_resource type="Texture2D" uid="uid://c2c58tfl1jgv7" path="res://Quiz Mode/Quiz assets/Lesson1_assets/HIT1.png" id="14_jklwq"]
+[ext_resource type="Texture2D" uid="uid://gi7n21w4ie6c" path="res://Quiz Mode/Quiz assets/Lesson1_assets/IDLE1.png" id="15_4vyiq"]
+[ext_resource type="Texture2D" uid="uid://c5h7302o4ye63" path="res://Quiz Mode/Quiz assets/Lesson1_assets/IDLE2.png" id="16_nf6mn"]
+[ext_resource type="Texture2D" uid="uid://isd2wodrtr61" path="res://Quiz Mode/Quiz assets/Lesson1_assets/WIN1.png" id="17_mwr8k"]
+[ext_resource type="Texture2D" uid="uid://bngh3tteoe5pq" path="res://Quiz Mode/Quiz assets/Lesson1_assets/WIN2.png" id="18_6qlrp"]
+[ext_resource type="Texture2D" uid="uid://du2m0jd0rsyfj" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vattack1.png" id="18_wd54x"]
+[ext_resource type="Texture2D" uid="uid://doeno41ekwfy2" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vattack2.png" id="19_wgy5m"]
+[ext_resource type="Texture2D" uid="uid://d3gvn6w6nsp5w" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vdead1.png" id="20_egmre"]
+[ext_resource type="Texture2D" uid="uid://bxyuwki2hpxy1" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vdead2.png" id="21_txf3g"]
+[ext_resource type="Texture2D" uid="uid://dmxwasnab0iaa" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vdead3.png" id="22_1g4t7"]
+[ext_resource type="Texture2D" uid="uid://fjw1s3qpb34p" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vhit1.png" id="23_jklwq"]
+[ext_resource type="Texture2D" uid="uid://bd5id1mvxft80" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vidle1.png" id="24_4vyiq"]
+[ext_resource type="Shader" uid="uid://ch0wf8g4ccocf" path="res://Quiz Mode/globalscripts/quiz_mode.gdshader" id="25_hnbqb"]
+[ext_resource type="Texture2D" uid="uid://cv1xjqsm0dtae" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vidle2.png" id="25_nf6mn"]
+[ext_resource type="Texture2D" uid="uid://b71u67ggwm30c" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vwin1.png" id="26_mwr8k"]
+[ext_resource type="AudioStream" uid="uid://c8qqmm2kak8m2" path="res://Quiz Mode/Quiz assets/sound effects/contador-385321_tUghxGR2.mp3" id="26_rrivg"]
+[ext_resource type="Texture2D" uid="uid://dpfhxqpabmefj" path="res://Quiz Mode/Quiz assets/Lesson1_assets/vwin2.png" id="27_6qlrp"]
+[ext_resource type="AudioStream" uid="uid://sg7hn25ruwf1" path="res://Quiz Mode/Quiz assets/sound effects/Lesson1.ogg" id="30_wgy5m"]
+[ext_resource type="Texture2D" uid="uid://ggd2016ok2g8" path="res://Quiz Mode/Quiz assets/hintbulb.png" id="31_4c255"]
+[ext_resource type="Texture2D" uid="uid://cxdjg51rb310" path="res://Quiz Mode/Quiz assets/hintnum.png" id="32_wthar"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvme7"]
+bg_color = Color(0.20871, 0.20871, 0.20871, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ekkrk"]
+bg_color = Color(0.987287, 0.122524, 3.85046e-07, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kv1rv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_xxx7p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wgy5m")
+}],
+"loop": false,
+"name": &"ATTACK1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_egmre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_txf3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1g4t7")
+}],
+"loop": false,
+"name": &"DEAD1",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_jklwq")
+}],
+"loop": true,
+"name": &"HIT1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_4vyiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_nf6mn")
+}],
+"loop": true,
+"name": &"IDLE1",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_mwr8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_6qlrp")
+}],
+"loop": true,
+"name": &"WIN1",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_atciy"]
+size = Vector2(210, 257)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0vwwo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_wd54x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_wgy5m")
+}],
+"loop": false,
+"name": &"ATTACKm1",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_egmre")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_txf3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_1g4t7")
+}],
+"loop": false,
+"name": &"DEADm1",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_jklwq")
+}],
+"loop": true,
+"name": &"HITm1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_4vyiq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_nf6mn")
+}],
+"loop": true,
+"name": &"IDLEm1",
+"speed": 1.8
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("26_mwr8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_6qlrp")
+}],
+"loop": true,
+"name": &"WINm1",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ht7oi"]
+size = Vector2(173, 233)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ibbmp"]
+shader = ExtResource("25_hnbqb")
+shader_parameter/border_thickness = 0.229
+shader_parameter/flash_intensity = 0.526
+shader_parameter/fade_softness = 0.066
+shader_parameter/edge_intensity = 2.0
+shader_parameter/warning_color = Color(1, 0, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t7mfd")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = -64.0
+offset_top = -49.0
+offset_right = 1205.0
+offset_bottom = 701.0
+texture = ExtResource("2_wgy5m")
+
+[node name="QuestionBar" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 304.0
+offset_right = 1096.0
+offset_bottom = 405.0
+texture = ExtResource("3_agu2e")
+
+[node name="QuestionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 123.0
+offset_top = 331.0
+offset_right = 1074.0
+offset_bottom = 393.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")
+theme_override_font_sizes/font_size = 38
+
+[node name="A1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.66
+anchor_right = 0.45
+anchor_bottom = 0.73
+offset_left = -0.159996
+offset_top = 0.319977
+offset_right = -0.399963
+offset_bottom = 27.96
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_rm1jq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="A1"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 14.0
+offset_right = 323.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")
+theme_override_font_sizes/font_size = 30
+
+[node name="B1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55
+anchor_top = 0.66
+anchor_right = 0.92
+anchor_bottom = 0.73
+offset_left = 8.39996
+offset_top = 0.319977
+offset_right = 2.16003
+offset_bottom = 34.96
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_rm1jq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="B1"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 15.0
+offset_right = 309.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")
+theme_override_font_sizes/font_size = 30
+
+[node name="C1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.8
+anchor_right = 0.42
+anchor_bottom = 0.87
+offset_left = -23.2
+offset_top = -0.400024
+offset_right = 21.16
+offset_bottom = 34.24
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_rm1jq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="C1"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 16.0
+offset_right = 319.0
+offset_bottom = 61.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")
+theme_override_font_sizes/font_size = 30
+
+[node name="D1" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.58
+anchor_top = 0.8
+anchor_right = 0.9
+anchor_bottom = 0.87
+offset_left = -34.16
+offset_top = 2.59998
+offset_right = 12.2001
+offset_bottom = 28.24
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_rm1jq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="D1"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 14.0
+offset_right = 333.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")
+theme_override_font_sizes/font_size = 30
+
+[node name="CorrectSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_neybv")
+volume_db = -12.0
+
+[node name="WrongSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_wd54x")
+volume_db = -12.0
+
+[node name="PlayerHealthBar" type="ProgressBar" parent="."]
+layout_mode = 1
+offset_left = 36.0
+offset_top = 41.0
+offset_right = 198.0
+offset_bottom = 68.0
+theme_override_styles/background = SubResource("StyleBoxFlat_vvme7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ekkrk")
+max_value = 15.0
+value = 15.0
+show_percentage = false
+
+[node name="VirusHealthBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -209.0
+offset_top = 38.0
+offset_right = -47.0
+offset_bottom = 65.0
+grow_horizontal = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_vvme7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ekkrk")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+
+[node name="Player" type="CharacterBody2D" parent="."]
+collision_layer = 2
+motion_mode = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
+position = Vector2(126, 184)
+scale = Vector2(3.3, 3.3)
+sprite_frames = SubResource("SpriteFrames_kv1rv")
+animation = &"ATTACK1"
+autoplay = "IDLE1"
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2(118, 171.5)
+shape = SubResource("RectangleShape2D_atciy")
+
+[node name="ShootPoint" type="Marker2D" parent="Player"]
+position = Vector2(195, 195)
+
+[node name="Monster" type="CharacterBody2D" parent="."]
+position = Vector2(13, 4)
+collision_layer = 2
+motion_mode = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Monster"]
+texture_filter = 1
+position = Vector2(1011, 178)
+scale = Vector2(3.29996, 3.29996)
+sprite_frames = SubResource("SpriteFrames_0vwwo")
+animation = &"WINm1"
+autoplay = "IDLEm1"
+frame_progress = 0.180268
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Monster"]
+visible = false
+position = Vector2(1018.5, 179.5)
+shape = SubResource("RectangleShape2D_ht7oi")
+
+[node name="ShootPoint" type="Marker2D" parent="Monster"]
+position = Vector2(925, 192)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="WarningOverlay" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_ibbmp")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="WarningSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_rrivg")
+
+[node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("30_wgy5m")
+volume_db = -10.481
+autoplay = true
+parameters/looping = true
+
+[node name="HintButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 206.0
+offset_top = 11.0
+offset_right = 238.0
+offset_bottom = 49.0
+texture_normal = ExtResource("31_4c255")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 203.0
+offset_top = 51.0
+offset_right = 242.0
+offset_bottom = 69.0
+texture = ExtResource("32_wthar")
+expand_mode = 1
+
+[node name="HintLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 52.0
+offset_right = 229.0
+offset_bottom = 67.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_5y8ai")

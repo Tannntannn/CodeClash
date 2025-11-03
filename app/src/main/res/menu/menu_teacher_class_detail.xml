@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <item
+        android:id="@+id/action_view_chart"
+        android:title="View Chart"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_action_view_chart" />
+        
+    <item
+        android:id="@+id/action_manage_attempts"
+        android:title="Manage Attempts"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_action_manage_attempts" />
+        
+    <item
+        android:id="@+id/action_lesson_management"
+        android:title="Lesson Management"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_action_lesson_management" />
+        
+</menu>

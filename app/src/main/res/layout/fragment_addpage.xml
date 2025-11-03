@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Class"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"
+            android:textColor="#2C2C2C"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif-medium" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+                <!-- Generate Code Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGenerateCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Generate Class Code"
+                    android:icon="@drawable/baseline_refresh_24"
+                    android:iconTint="@android:color/white"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/red_500" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/red_500"
+                    app:hintTextColor="@color/red_500"
+                    app:startIconDrawable="@drawable/baseline_person_24"
+                    app:startIconTint="@color/red_500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etClassCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:hint="Class Code"
+                        android:inputType="textCapCharacters"
+                        android:textColor="#2C2C2C"
+                        android:textColorHint="#757575" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/red_500"
+                    app:hintTextColor="@color/red_500"
+                    app:startIconDrawable="@drawable/baseline_settings_24"
+                    app:startIconTint="@color/red_500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etYearLevel"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:hint="Year Level"
+                        android:inputType="number"
+                        android:textColor="#2C2C2C"
+                        android:textColorHint="#757575" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeColor="@color/red_500"
+                    app:hintTextColor="@color/red_500"
+                    app:startIconDrawable="@drawable/baseline_star_24"
+                    app:startIconTint="@color/red_500">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etBlock"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:hint="Block"
+                        android:inputType="textCapCharacters"
+                        android:textColor="#2C2C2C"
+                        android:textColorHint="#757575" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Create button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateClass"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="32dp"
+            android:backgroundTint="@color/red_500"
+            android:text="Create Class"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="16dp"
+            app:elevation="6dp"
+            app:icon="@drawable/baseline_add_24"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="#FFFFFF"
+            app:rippleColor="#FFFFFF" />
+
+    </LinearLayout>
+</ScrollView>

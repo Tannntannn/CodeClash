@@ -1,0 +1,388 @@
+[gd_scene load_steps=20 format=3 uid="uid://opj3m0o2crkr"]
+
+[ext_resource type="Script" uid="uid://c2kfugj1g482s" path="res://Lesson 1/lesson_1.gd" id="1_1rf7i"]
+[ext_resource type="Texture2D" uid="uid://b4fvgooim1cox" path="res://Quiz Mode/Quiz assets/Lesson1.png" id="2_6u8u8"]
+[ext_resource type="Texture2D" uid="uid://decohurob3dbu" path="res://Assets/bordder.png" id="3_1rf7i"]
+[ext_resource type="Script" uid="uid://cgxmm78s3a0ib" path="res://Lesson 1/panel.gd" id="3_ctvua"]
+[ext_resource type="FontFile" uid="uid://bmgby87d67iyf" path="res://Quiz Mode/Quiz assets/fonts/LilitaOne-Regular.ttf" id="4_0pelu"]
+[ext_resource type="Script" uid="uid://bcl0yubi7gs3i" path="res://Lesson 1/panel_2.gd" id="4_yvf3p"]
+[ext_resource type="Script" uid="uid://7d2k1ugseru2" path="res://Lesson 1/button_2.gd" id="7_u5krn"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="8_ctvua"]
+[ext_resource type="Texture2D" uid="uid://ddv8ips3wxb0u" path="res://Assets/clock.png" id="9_yvf3p"]
+[ext_resource type="Texture2D" uid="uid://ggd2016ok2g8" path="res://Quiz Mode/Quiz assets/hintbulb.png" id="10_0pelu"]
+[ext_resource type="Texture2D" uid="uid://cxdjg51rb310" path="res://Quiz Mode/Quiz assets/hintnum.png" id="11_ot5dn"]
+[ext_resource type="FontFile" uid="uid://x2ny0hddin41" path="res://Quiz Mode/Quiz assets/fonts/RPGSystem.ttf" id="12_xwoyp"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5cao1"]
+texture = ExtResource("2_6u8u8")
+modulate_color = Color(0.400698, 0.400698, 0.400698, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2mled"]
+texture = ExtResource("3_1rf7i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vrp3p"]
+texture = ExtResource("3_1rf7i")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8er"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="FontVariation" id="FontVariation_2urk4"]
+base_font = ExtResource("8_ctvua")
+
+[sub_resource type="FontVariation" id="FontVariation_2835o"]
+base_font = ExtResource("8_ctvua")
+
+[sub_resource type="FontVariation" id="FontVariation_6u8u8"]
+base_font = ExtResource("8_ctvua")
+
+[node name="GameStart" type="Control" groups=["GameController"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1rf7i")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_5cao1")
+metadata/_edit_lock_ = true
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.31
+anchor_top = 0.5
+anchor_right = 0.31
+anchor_bottom = 0.5
+offset_left = -307.12
+offset_top = -376.0
+offset_right = 292.88
+offset_bottom = 369.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_2mled")
+
+[node name="Label" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.472
+anchor_right = 0.5
+anchor_bottom = 0.472
+offset_left = -224.0
+offset_top = -63.64
+offset_right = 248.0
+offset_bottom = 130.36
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 21
+text = "public                       {
+                             void main(                args) {
+                                           (\"                      \");
+    }
+}"
+
+[node name="Label" type="Label" parent="Panel/Panel/Label"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.472
+anchor_right = 0.5
+anchor_bottom = 0.472
+offset_left = -205.0
+offset_top = -282.568
+offset_right = 169.0
+offset_bottom = -219.568
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_0pelu")
+theme_override_font_sizes/font_size = 21
+text = "Complete this Java program that displays 
+a simple greeting message."
+horizontal_alignment = 1
+
+[node name="SystemoutprintlnL1" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 358.0
+offset_right = 245.0
+offset_bottom = 387.0
+script = ExtResource("3_ctvua")
+allowed_button_name = "SystembuttonL1"
+
+[node name="ClassmmainL1" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 292.0
+offset_right = 239.0
+offset_bottom = 318.0
+script = ExtResource("3_ctvua")
+allowed_button_name = "ClassMainbuttonL1"
+
+[node name="String[]L1" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 324.0
+offset_right = 418.0
+offset_bottom = 351.0
+script = ExtResource("3_ctvua")
+allowed_button_name = "StringbuttonL1"
+
+[node name="Public staticL1" type="Panel" parent="Panel/Panel" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = 122.0
+offset_top = 324.0
+offset_right = 210.0
+offset_bottom = 352.0
+script = ExtResource("3_ctvua")
+allowed_button_name = "publicstaticbuttonL1"
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.828
+anchor_top = 0.531
+anchor_right = 0.828
+anchor_bottom = 0.531
+offset_left = -157.856
+offset_top = -393.088
+offset_right = 166.144
+offset_bottom = 277.912
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_vrp3p")
+
+[node name="SystembuttonL1" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.424
+anchor_right = 0.5
+anchor_bottom = 0.424
+offset_left = -81.0
+offset_top = -16.504
+offset_right = 89.0
+offset_bottom = 15.496
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.02178, 1.02717)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_aa8er")
+text = "System.out.println"
+script = ExtResource("7_u5krn")
+
+[node name="HelloworldbuttonL1" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.275
+anchor_top = 0.253
+anchor_right = 0.275
+anchor_bottom = 0.253
+offset_left = -52.1
+offset_top = -13.763
+offset_right = 55.9
+offset_bottom = 18.237
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_aa8er")
+text = "Hello World"
+script = ExtResource("7_u5krn")
+
+[node name="ClassMainbuttonL1" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.294
+anchor_top = 0.344
+anchor_right = 0.294
+anchor_bottom = 0.344
+offset_left = -51.256
+offset_top = -13.824
+offset_right = 60.744
+offset_bottom = 14.176
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_aa8er")
+text = "Class Main"
+script = ExtResource("7_u5krn")
+
+[node name="publicstaticbuttonL1" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.739
+anchor_top = 0.25
+anchor_right = 0.739
+anchor_bottom = 0.25
+offset_left = -61.436
+offset_top = -14.75
+offset_right = 61.564
+offset_bottom = 14.25
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_aa8er")
+text = "public static"
+script = ExtResource("7_u5krn")
+
+[node name="StringbuttonL1" type="Button" parent="Panel2" groups=["Draggable"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.731
+anchor_top = 0.347
+anchor_right = 0.731
+anchor_bottom = 0.347
+offset_left = -38.844
+offset_top = -13.837
+offset_right = 39.156
+offset_bottom = 14.163
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_aa8er")
+text = "String[]"
+script = ExtResource("7_u5krn")
+
+[node name="Label" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.258
+anchor_top = 0.037
+anchor_right = 0.258
+anchor_bottom = 0.037
+offset_left = -19.592
+offset_top = 84.134
+offset_right = 182.408
+offset_bottom = 117.134
+theme_override_fonts/font = SubResource("FontVariation_2urk4")
+theme_override_font_sizes/font_size = 25
+text = "Drag and Drop"
+horizontal_alignment = 1
+
+[node name="Clock" type="Sprite2D" parent="Panel2"]
+position = Vector2(65, 398)
+scale = Vector2(0.133, 0.1135)
+texture = ExtResource("9_yvf3p")
+
+[node name="Time" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.307
+anchor_top = 0.663
+anchor_right = 0.307
+anchor_bottom = 0.663
+offset_left = -56.468
+offset_top = -13.873
+offset_right = 6.532
+offset_bottom = 10.127
+theme_override_fonts/font = SubResource("FontVariation_2835o")
+theme_override_font_sizes/font_size = 19
+text = "5:00    "
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.731
+anchor_top = 0.618
+anchor_right = 0.731
+anchor_bottom = 0.618
+offset_left = -30.844
+offset_top = -33.678
+offset_right = 31.156
+offset_bottom = 34.322
+theme_override_fonts/font = SubResource("FontVariation_6u8u8")
+text = "Score:"
+
+[node name="MistakesLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.528
+anchor_top = 0.739
+anchor_right = 0.528
+anchor_bottom = 0.739
+offset_left = -77.072
+offset_top = -21.869
+offset_right = 76.928
+offset_bottom = 22.131
+theme_override_fonts/font = ExtResource("8_ctvua")
+theme_override_font_sizes/font_size = 22
+
+[node name="Label4" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.806
+anchor_right = 0.5
+anchor_bottom = 0.806
+offset_left = -117.0
+offset_top = -21.826
+offset_right = 120.0
+offset_bottom = 21.174
+theme_override_fonts/font = ExtResource("8_ctvua")
+text = "If you made 2 mistakes it's
+                       game over"
+
+[node name="HelloWorldL1" type="Panel" parent="Panel2" groups=["Dropzones"]]
+layout_mode = 0
+offset_left = -402.0
+offset_top = 352.0
+offset_right = -310.0
+offset_bottom = 383.0
+script = ExtResource("4_yvf3p")
+allowed_button_name = "HelloworldbuttonL1"
+
+[node name="HintButton" type="TextureButton" parent="Panel2"]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 378.0
+offset_right = 174.0
+offset_bottom = 423.0
+texture_normal = ExtResource("10_0pelu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Panel2"]
+layout_mode = 0
+offset_left = 132.0
+offset_top = 425.0
+offset_right = 185.0
+offset_bottom = 446.0
+texture = ExtResource("11_ot5dn")
+expand_mode = 1
+
+[node name="HintLabel" type="Label" parent="Panel2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.603
+anchor_top = 1.267
+anchor_right = 0.603
+anchor_bottom = 1.267
+offset_left = -55.372
+offset_top = -422.157
+offset_right = -42.372
+offset_bottom = -407.157
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("12_xwoyp")
+text = " "
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="pressed" from="Panel2/HintButton" to="." method="_on_hint_button_pressed"]

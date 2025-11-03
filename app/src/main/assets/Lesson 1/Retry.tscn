@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://bb8pg1vhn4was"]
+
+[ext_resource type="Script" uid="uid://cysglpy2qymtr" path="res://Lesson 1/retryUI.gd" id="1_f33wb"]
+[ext_resource type="FontFile" uid="uid://fmgsa8tbbkr3" path="res://Assets/Base Moon.otf" id="2_33e35"]
+[ext_resource type="Texture2D" uid="uid://djsit1dr3ydct" path="res://Quiz Mode/Quiz assets/Lesson2_assets/button_rectangle_border.png" id="2_f33wb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62e2m"]
+texture = ExtResource("2_f33wb")
+
+[sub_resource type="FontVariation" id="FontVariation_f33wb"]
+base_font = ExtResource("2_33e35")
+
+[sub_resource type="FontVariation" id="FontVariation_inffw"]
+base_font = ExtResource("2_33e35")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jn4c"]
+bg_color = Color(0.894118, 0.898039, 0.929412, 1)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+
+[sub_resource type="FontVariation" id="FontVariation_4jn4c"]
+base_font = ExtResource("2_33e35")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_f33wb")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.638
+anchor_top = 0.5
+anchor_right = 0.638
+anchor_bottom = 0.5
+offset_left = -297.0
+offset_top = -306.0
+offset_right = 282.0
+offset_bottom = 266.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_62e2m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("FontVariation_f33wb")
+theme_override_font_sizes/font_size = 37
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="Button3" type="Button" parent="."]
+process_mode = 3
+custom_minimum_size = Vector2(220, 50)
+layout_mode = 2
+offset_left = -119.0
+offset_top = 104.0
+offset_right = 101.0
+offset_bottom = 154.0
+theme_override_colors/font_color = Color(0.160784, 0.168627, 0.168627, 1)
+theme_override_fonts/font = SubResource("FontVariation_inffw")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4jn4c")
+text = "Return to selection"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -119.0
+offset_top = -214.0
+offset_right = 101.0
+offset_bottom = -165.0
+theme_override_fonts/font = SubResource("FontVariation_4jn4c")
+theme_override_font_sizes/font_size = 37
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]

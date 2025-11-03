@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca6pk2qjvlg7k"]
+
+[ext_resource type="Script" uid="uid://bv4nfq51jws3f" path="res://Quiz Mode/Lesson2 Quiz/fireball2.gd" id="1_s82va"]
+[ext_resource type="Texture2D" uid="uid://dkg1814edpc0y" path="res://Quiz Mode/Quiz assets/Lesson2_assets/sprites2/attack girl1.png" id="2_eiv2v"]
+[ext_resource type="Texture2D" uid="uid://chfxi3anpfydf" path="res://Quiz Mode/Quiz assets/Lesson2_assets/sprites2/attack girl2.png" id="3_bo3yl"]
+[ext_resource type="Texture2D" uid="uid://b5qca0o76whf5" path="res://Quiz Mode/Quiz assets/Lesson2_assets/sprites2/attack girl3.png" id="4_k7yw7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lk87q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_eiv2v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bo3yl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_k7yw7")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 2.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gveuj"]
+size = Vector2(139.5, 119)
+
+[node name="Fireball" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_s82va")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(87, -1)
+scale = Vector2(0.180438, 0.180438)
+sprite_frames = SubResource("SpriteFrames_lk87q")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 1.0
+speed_scale = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(85.25, -3)
+shape = SubResource("RectangleShape2D_gveuj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

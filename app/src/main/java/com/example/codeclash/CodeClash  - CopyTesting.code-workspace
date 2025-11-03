@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../AndroidStudioProjects/CodeClash  - CopyTesting"
+		},
+		{
+			"path": "../AndroidStudioProjects/gametest"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}

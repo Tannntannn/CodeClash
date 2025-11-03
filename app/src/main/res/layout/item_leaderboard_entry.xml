@@ -1,0 +1,80 @@
+<!-- 🎮 GAMIFIED LEADERBOARD ENTRY -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@color/game_card">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:gravity="center_vertical">
+
+        <!-- 🏆 RANK BADGE -->
+        <TextView
+            android:id="@+id/rankText"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:text="#1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/game_rank_background"
+            android:padding="8dp" />
+
+        <!-- 👤 STUDENT INFO -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="20dp">
+
+            <TextView
+                android:id="@+id/studentNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Student Name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/game_text_primary"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/attemptsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3/3 attempts"
+                android:textSize="14sp"
+                android:textColor="@color/game_text_secondary"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- 🎯 SCORE BADGE -->
+        <TextView
+            android:id="@+id/scoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="95"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/game_score_background"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:minWidth="60dp"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
+
