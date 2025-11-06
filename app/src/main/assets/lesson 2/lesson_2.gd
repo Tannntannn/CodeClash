@@ -11,7 +11,7 @@ var time_left = 300
 var correctly_placed_blocks = {}
 var total_blocks = 5
 var mistakes_made = 0
-var max_mistakes = 3
+var max_mistakes = 2
 
 # SCORING SYSTEM VARIABLES
 var current_score = 0

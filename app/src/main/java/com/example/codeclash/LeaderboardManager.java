@@ -5,6 +5,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,17 +67,24 @@ public class LeaderboardManager {
           .addOnSuccessListener(documentSnapshot -> {
               
               if (documentSnapshot.exists()) {
-                  // Student already has a score, check if new score is higher
+                  // Student already has a score
                   int existingScore = documentSnapshot.getLong("score").intValue();
                   int existingAttempts = documentSnapshot.getLong("attemptsUsed").intValue();
                   
+                  // Always update attemptsUsed to reflect current attempt count
+                  // But only update score if it's better
                   if (score > existingScore) {
-                      // Update with higher score
+                      // Update with higher score and current attempts
                       updateScore(classCode, lessonName, activityType, studentId, studentName, score, attemptsUsed);
                   } else if (score == existingScore && attemptsUsed < existingAttempts) {
                       // Same score but fewer attempts used
                       updateScore(classCode, lessonName, activityType, studentId, studentName, score, attemptsUsed);
+                  } else if (attemptsUsed != existingAttempts) {
+                      // Score didn't improve, but attempts changed - update attempts only
+                      // Using set() instead of update() ensures listeners are always triggered
+                      updateAttemptsOnly(classCode, lessonName, activityType, studentId, attemptsUsed);
                   }
+                  // If score and attempts are both the same, no update needed
               } else {
                   // First attempt, record the score
                   updateScore(classCode, lessonName, activityType, studentId, studentName, score, attemptsUsed);
@@ -102,6 +110,45 @@ public class LeaderboardManager {
           .set(scoreData)
           .addOnSuccessListener(v -> System.out.println("✅ LeaderboardManager: Score write success: " + path))
           .addOnFailureListener(e -> System.out.println("❌ LeaderboardManager: Score write FAILED: " + path + " error=" + e.getMessage()));
+    }
+    
+    /**
+     * Update only attemptsUsed field without changing score
+     * Uses set with merge to ensure the update always succeeds and triggers listeners
+     */
+    private static void updateAttemptsOnly(String classCode, String lessonName, String activityType,
+                                           String studentId, int attemptsUsed) {
+        // First, get the existing document to preserve score and studentName
+        getDb().collection("Classes").document(classCode)
+          .collection("Leaderboards").document(lessonName + "_" + activityType)
+          .collection("Scores").document(studentId)
+          .get()
+          .addOnSuccessListener(documentSnapshot -> {
+              if (documentSnapshot.exists()) {
+                  // Preserve existing data and only update attempts and timestamp
+                  Map<String, Object> updateData = new HashMap<>();
+                  updateData.put("studentId", documentSnapshot.getString("studentId"));
+                  updateData.put("studentName", documentSnapshot.getString("studentName"));
+                  updateData.put("score", documentSnapshot.getLong("score"));
+                  updateData.put("attemptsUsed", attemptsUsed);
+                  updateData.put("timestamp", System.currentTimeMillis());
+                  
+                  String path = "Classes/" + classCode + "/Leaderboards/" + lessonName + "_" + activityType + "/Scores/" + studentId;
+                  System.out.println("🏆 LeaderboardManager: Updating attempts only → " + path + " attemptsUsed=" + attemptsUsed);
+                  getDb().collection("Classes").document(classCode)
+                    .collection("Leaderboards").document(lessonName + "_" + activityType)
+                    .collection("Scores").document(studentId)
+                    .set(updateData)
+                    .addOnSuccessListener(v -> System.out.println("✅ LeaderboardManager: Attempts update success: " + path))
+                    .addOnFailureListener(e -> System.out.println("❌ LeaderboardManager: Attempts update FAILED: " + path + " error=" + e.getMessage()));
+              } else {
+                  System.out.println("❌ LeaderboardManager: Document does not exist for attempts update");
+              }
+          })
+          .addOnFailureListener(e -> {
+              String path = "Classes/" + classCode + "/Leaderboards/" + lessonName + "_" + activityType + "/Scores/" + studentId;
+              System.out.println("❌ LeaderboardManager: Failed to get document for attempts update: " + path + " error=" + e.getMessage());
+          });
     }
     
     /**
@@ -191,6 +238,89 @@ public class LeaderboardManager {
     public static void getAllScores(String classCode, String lessonName, String activityType,
                                     OnLeaderboardCallback callback) {
         getScoresInternal(classCode, lessonName, activityType, null, callback);
+    }
+    
+    /**
+     * Add real-time listener for leaderboard scores
+     * Returns ListenerRegistration that must be removed to stop listening
+     */
+    public static ListenerRegistration addRealtimeScoresListener(String classCode, String lessonName, String activityType,
+                                                                 Integer limit, OnLeaderboardCallback callback) {
+        System.out.println("🏆 LeaderboardManager: addRealtimeScoresListener() called - Class: " + classCode + ", Lesson: " + lessonName + ", Activity: " + activityType + ", limit=" + limit);
+
+        if (ACTIVITY_COMPILER.equals(activityType)) {
+            System.out.println("🏆 LeaderboardManager: Skipping compiler activity");
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }
+
+        if (classCode == null || lessonName == null || activityType == null) {
+            System.out.println("❌ LeaderboardManager: Invalid input parameters for addRealtimeScoresListener");
+            callback.onSuccess(new ArrayList<>());
+            return null;
+        }
+
+        Query query = getDb().collection("Classes").document(classCode)
+                .collection("Leaderboards").document(lessonName + "_" + activityType)
+                .collection("Scores")
+                .orderBy("score", Query.Direction.DESCENDING);
+
+        if (limit != null && limit > 0) {
+            query = query.limit(limit);
+        }
+
+        return query.addSnapshotListener((querySnapshot, error) -> {
+            if (error != null) {
+                System.out.println("❌ LeaderboardManager: Real-time listener error: " + error.getMessage());
+                callback.onFailure(error);
+                return;
+            }
+
+            if (querySnapshot == null) {
+                System.out.println("🏆 LeaderboardManager: Real-time listener - querySnapshot is null");
+                callback.onSuccess(new ArrayList<>());
+                return;
+            }
+
+            System.out.println("🏆 LeaderboardManager: Real-time update - Found " + querySnapshot.size() + " documents");
+            List<LeaderboardEntry> rawEntries = new ArrayList<>();
+
+            for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                if (doc.exists()) {
+                    Long scoreLong = doc.getLong("score");
+                    Long attemptsLong = doc.getLong("attemptsUsed");
+                    
+                    if (scoreLong != null && attemptsLong != null) {
+                        LeaderboardEntry entry = new LeaderboardEntry(
+                                doc.getString("studentId"),
+                                doc.getString("studentName"),
+                                scoreLong.intValue(),
+                                attemptsLong.intValue()
+                        );
+                        rawEntries.add(entry);
+                    }
+                }
+            }
+
+            resolveStudentNames(rawEntries, new OnLeaderboardCallback() {
+                @Override
+                public void onSuccess(List<LeaderboardEntry> resolvedEntries) {
+                    resolvedEntries.sort((a, b) -> {
+                        int scoreCompare = Integer.compare(b.score, a.score);
+                        if (scoreCompare != 0) return scoreCompare;
+                        return Integer.compare(a.attemptsUsed, b.attemptsUsed);
+                    });
+                    System.out.println("🏆 LeaderboardManager: Real-time update - Returning " + resolvedEntries.size() + " entries");
+                    callback.onSuccess(resolvedEntries);
+                }
+
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("❌ LeaderboardManager: Failed to resolve names in real-time: " + e.getMessage());
+                    callback.onFailure(e);
+                }
+            });
+        });
     }
     
     /**

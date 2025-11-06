@@ -13,7 +13,7 @@ var total_blocks = 5  # You have 4 buttons in Lesson 5
 
 # Mistakes
 var mistakes_made = 0
-var max_mistakes = 3  
+var max_mistakes = 2  
 
 # Scoring
 var current_score = 0

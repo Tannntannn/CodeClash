@@ -338,7 +338,7 @@ offset_top = 533.0
 offset_right = 285.0
 offset_bottom = 576.0
 theme_override_fonts/font = ExtResource("7_wjgmt")
-text = "If you made 3 mistakes it's
+text = "If you made 2 mistakes it's
                        game over"
 
 [node name="ScoreLabel" type="Label" parent="Panel2"]

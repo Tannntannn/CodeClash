@@ -424,7 +424,7 @@ func reset_game():
 	
 	print("Game state reset!")
 
-func submit_score_to_android():
+func submit_score_to_android(  ):
 	print("🎯 Lesson1: Submitting score to Android - Score:", current_score)
 	
 	var app_plugin = Engine.get_singleton("AppPlugin")

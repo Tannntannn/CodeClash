@@ -22,6 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class Leaderboards extends Fragment {
             "CONDITIONAL LOOPS",
             "ARRAYS"
     };
+    private ListenerRegistration currentLeaderboardListener;
 
     @Nullable
     @Override
@@ -62,6 +64,17 @@ public class Leaderboards extends Fragment {
         loadLeaderboard();
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Remove listener to prevent memory leaks
+        if (currentLeaderboardListener != null) {
+            currentLeaderboardListener.remove();
+            currentLeaderboardListener = null;
+            System.out.println("🏆 Leaderboards: Removed listener in onDestroyView");
+        }
     }
 
     private void initViews() {
@@ -197,6 +210,13 @@ public class Leaderboards extends Fragment {
         System.out.println("🏆 Leaderboards: currentLesson = " + currentLesson);
         System.out.println("🏆 Leaderboards: currentActivityType = " + currentActivityType);
 
+        // Remove old listener if exists
+        if (currentLeaderboardListener != null) {
+            currentLeaderboardListener.remove();
+            currentLeaderboardListener = null;
+            System.out.println("🏆 Leaderboards: Removed old listener");
+        }
+
         // Check network connectivity first
         if (getContext() != null && !NetworkManager.isNetworkAvailable(getContext())) {
             NetworkManager.showOfflineMessage(getContext());
@@ -209,6 +229,7 @@ public class Leaderboards extends Fragment {
             loadGeneralLeaderboard();
             return;
         }
+        
         // Clear existing data first
         leaderboardEntries.clear();
         adapter.notifyDataSetChanged();
@@ -218,65 +239,64 @@ public class Leaderboards extends Fragment {
         emptyStateContainer.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
-        // Student view within a specific class: limit to top 10
-        LeaderboardManager.getTopScores(currentClassCode, currentLesson, currentActivityType, 
+        // Determine if user is teacher (check if they created classes)
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        boolean isTeacher = false;
+        if (currentUser != null) {
+            // Quick check - if they're viewing a specific class, assume student view
+            // For real-time, we'll use top 10 for now (can be enhanced later)
+            isTeacher = false; // Simplified for now
+        }
+
+        // Add real-time listener - limit to top 10 for students
+        currentLeaderboardListener = LeaderboardManager.addRealtimeScoresListener(
+            currentClassCode, currentLesson, currentActivityType, 
+            10, // Limit to top 10
             new LeaderboardManager.OnLeaderboardCallback() {
                 @Override
                 public void onSuccess(List<LeaderboardManager.LeaderboardEntry> entries) {
-                        if (!isAdded() || getActivity() == null) return;
+                    if (!isAdded() || getActivity() == null) return;
 
                     leaderboardEntries.clear();
                     leaderboardEntries.addAll(entries);
                     adapter.notifyDataSetChanged();
-                        if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
 
                     if (entries.isEmpty()) {
-                            System.out.println("🏆 Leaderboards: No entries found, showing empty state");
-                            System.out.println("🏆 Leaderboards: emptyStateText is null? " + (emptyStateText == null));
-                            System.out.println("🏆 Leaderboards: recyclerView is null? " + (recyclerView == null));
-
-                            if (emptyStateText != null && emptyStateContainer != null) {
-                                if (currentActivityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
-                                    emptyStateText.setText("No quiz scores yet");
-                                } else {
-                                    emptyStateText.setText("No code builder scores yet");
-                                }
-                                emptyStateContainer.setVisibility(View.VISIBLE);
-                                System.out.println("🏆 Leaderboards: Set empty state text and made visible");
+                        System.out.println("🏆 Leaderboards: No entries found, showing empty state");
+                        if (emptyStateText != null && emptyStateContainer != null) {
+                            if (currentActivityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
+                                emptyStateText.setText("No quiz scores yet");
                             } else {
-                                System.out.println("❌ Leaderboards: emptyStateText is null, cannot show empty state");
+                                emptyStateText.setText("No code builder scores yet");
                             }
-
-                            if (recyclerView != null) {
-                        recyclerView.setVisibility(View.GONE);
-                                System.out.println("🏆 Leaderboards: Hid recycler view");
-                            } else {
-                                System.out.println("❌ Leaderboards: recyclerView is null");
-                            }
+                            emptyStateContainer.setVisibility(View.VISIBLE);
+                        }
+                        if (recyclerView != null) {
+                            recyclerView.setVisibility(View.GONE);
+                        }
                     } else {
-                            System.out.println("🏆 Leaderboards: Showing " + entries.size() + " entries");
-                            if (emptyStateContainer != null) {
-                                emptyStateContainer.setVisibility(View.GONE);
-                                System.out.println("🏆 Leaderboards: Hid empty state text");
-                            }
-                            if (recyclerView != null) {
-                        recyclerView.setVisibility(View.VISIBLE);
-                                System.out.println("🏆 Leaderboards: Showed recycler view");
-                            }
+                        System.out.println("🏆 Leaderboards: Real-time update - Showing " + entries.size() + " entries");
+                        if (emptyStateContainer != null) {
+                            emptyStateContainer.setVisibility(View.GONE);
+                        }
+                        if (recyclerView != null) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Exception e) {
-                        if (!isAdded() || getActivity() == null) return;
+                    if (!isAdded() || getActivity() == null) return;
 
                     emptyStateText.setText("Failed to load leaderboard");
-                        emptyStateContainer.setVisibility(View.VISIBLE);
+                    emptyStateContainer.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
-                        if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
-                        if (getContext() != null) {
-                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+                    if (getContext() != null) {
+                        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
     }

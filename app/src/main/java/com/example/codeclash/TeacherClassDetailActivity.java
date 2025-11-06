@@ -42,8 +42,10 @@ import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class TeacherClassDetailActivity extends AppCompatActivity {
 
@@ -56,6 +58,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
     private List<Student> filteredStudentsList = new ArrayList<>();
     private TextInputEditText searchEditText;
     private ListenerRegistration studentsListener;
+    private Map<String, ListenerRegistration> studentScoreListeners = new HashMap<>();
+    private Set<String> expandedStudentIds = new HashSet<>();
+    private List<String> lessonNames = new ArrayList<>(); // Store lessons in order from Firestore
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +235,7 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 .addOnSuccessListener(doc -> {
                     String owner = doc.getString("createdBy");
                     if (owner != null && owner.equals(uid)) {
+                        loadLessons(); // Load lessons first to get the correct order
                         loadStudents();
                     } else {
                         Toast.makeText(this, "You don't own this class", Toast.LENGTH_SHORT).show();
@@ -240,6 +246,37 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to verify ownership", Toast.LENGTH_SHORT).show();
                     finish();
                 });
+    }
+
+    private void loadLessons() {
+        System.out.println("🔍 TeacherClassDetail: Loading lessons for class: " + classCode);
+        FirebaseFirestore.getInstance().collection("Classes").document(classCode).get()
+            .addOnSuccessListener(documentSnapshot -> {
+                lessonNames.clear();
+                Object lessonsObj = documentSnapshot.get("lessons");
+                if (lessonsObj instanceof List<?>) {
+                    List<?> lessons = (List<?>) lessonsObj;
+                    for (Object lessonItem : lessons) {
+                        String lessonName = null;
+                        if (lessonItem instanceof Map) {
+                            Map<String, Object> lessonMap = (Map<String, Object>) lessonItem;
+                            lessonName = (String) lessonMap.get("name");
+                        } else if (lessonItem instanceof String) {
+                            lessonName = (String) lessonItem;
+                        }
+                        if (lessonName != null) {
+                            lessonNames.add(lessonName);
+                        }
+                    }
+                }
+                System.out.println("🔍 TeacherClassDetail: Loaded " + lessonNames.size() + " lessons in order: " + lessonNames);
+            })
+            .addOnFailureListener(e -> {
+                System.out.println("❌ TeacherClassDetail: Failed to load lessons: " + e.getMessage());
+                // Fallback to default order if loading fails
+                lessonNames.clear();
+                lessonNames.addAll(getDefaultLessons());
+            });
     }
 
     @Override
@@ -340,8 +377,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setTitle("Manage Student Attempts");
 
-        String[] lessons = {"INTRODUCTION TO JAVA", "VARIABLES and DATA", "OPERATORS and EXPRESSIONS",
-                "CONDITIONAL STATEMENTS", "CONDITIONAL LOOPS", "ARRAYS"};
+        // Use lessons loaded from Firestore (same order as student lesson list)
+        List<String> lessonsList = lessonNames.isEmpty() ? getDefaultLessons() : lessonNames;
+        String[] lessons = lessonsList.toArray(new String[0]);
 
         builder.setItems(lessons, (dialog, which) -> {
             String selectedLesson = lessons[which];
@@ -350,6 +388,17 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", null);
         builder.show();
+    }
+    
+    private List<String> getDefaultLessons() {
+        List<String> defaultLessons = new ArrayList<>();
+        defaultLessons.add("INTRODUCTION TO JAVA");
+        defaultLessons.add("VARIABLES and DATA");
+        defaultLessons.add("OPERATORS and EXPRESSIONS");
+        defaultLessons.add("CONDITIONAL STATEMENTS");
+        defaultLessons.add("CONDITIONAL LOOPS");
+        defaultLessons.add("ARRAYS");
+        return defaultLessons;
     }
 
     private void showActivityTypeSelection(String lessonName) {
@@ -381,8 +430,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setTitle("Lesson Management");
 
-        String[] lessons = {"INTRODUCTION TO JAVA", "VARIABLES and DATA", "OPERATORS and EXPRESSIONS",
-                "CONDITIONAL STATEMENTS", "CONDITIONAL LOOPS", "ARRAYS"};
+        // Use lessons loaded from Firestore (same order as student lesson list)
+        List<String> lessonsList = lessonNames.isEmpty() ? getDefaultLessons() : lessonNames;
+        String[] lessons = lessonsList.toArray(new String[0]);
 
         builder.setItems(lessons, (dialog, which) -> {
             String selectedLesson = lessons[which];
@@ -457,8 +507,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
     private void loadChartData(LineChart lineChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer) {
         System.out.println("🔍 TeacherClassDetail: Loading chart data for class: " + classCode);
         
-        String[] lessons = {"INTRODUCTION TO JAVA", "VARIABLES and DATA", "OPERATORS and EXPRESSIONS",
-                "CONDITIONAL STATEMENTS", "CONDITIONAL LOOPS", "ARRAYS"};
+        // Use lessons loaded from Firestore (same order as student lesson list)
+        List<String> lessonsList = lessonNames.isEmpty() ? getDefaultLessons() : lessonNames;
+        String[] lessons = lessonsList.toArray(new String[0]);
         
         ChartDataResult result = new ChartDataResult();
         loadAllLessonChartData(result, lessons, 0, lineChart, loadingContainer, emptyStateContainer);
@@ -867,6 +918,20 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         }
     }
     
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopStudentsListener();
+        // Remove all score listeners
+        for (ListenerRegistration listener : studentScoreListeners.values()) {
+            if (listener != null) {
+                listener.remove();
+            }
+        }
+        studentScoreListeners.clear();
+        System.out.println("🔍 TeacherClassDetail: Cleaned up all listeners in onDestroy");
+    }
+    
     private void updateStudentInfo(String studentId, String newName, String newYear, String newBlock) {
         Map<String, Object> updates = new HashMap<>();
         updates.put("fullName", newName);
@@ -907,15 +972,31 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         Student student = students.get(position);
             holder.nameText.setText(student.fullName);
-            // Display year and block (should now have actual values)
+            // Display year and block in the middle section
             String yearLevel = student.yearLevel != null ? student.yearLevel : "N/A";
             String block = student.block != null ? student.block : "N/A";
-            holder.yearBlockText.setText(yearLevel + " - " + block);
+            String yearBlockDisplay = yearLevel + " - " + block;
+            holder.yearBlockText.setText(yearBlockDisplay);
+            holder.yearBlockText.setVisibility(View.VISIBLE);
+            
+            System.out.println("🔍 TeacherClassDetail: Binding student " + position + ": " + student.fullName + ", Year: " + yearLevel + ", Block: " + block);
+            System.out.println("🔍 TeacherClassDetail: Setting yearBlockText to: " + yearBlockDisplay);
 
-            System.out.println("🔍 TeacherClassDetail: Binding student " + position + ": " + student.fullName);
-
-            // Initially hide expandable container
-            holder.expandableContainer.setVisibility(View.GONE);
+            // Check if this student's card was expanded
+            boolean wasExpanded = expandedStudentIds.contains(student.studentId);
+            
+            if (wasExpanded) {
+                // Card was expanded - restore expanded state and reload scores
+                holder.expandableContainer.setVisibility(View.VISIBLE);
+                holder.loadingContainer.setVisibility(View.VISIBLE);
+                holder.scoresContainer.setVisibility(View.GONE);
+                holder.noScoresContainer.setVisibility(View.GONE);
+                // Reload scores with real-time listeners
+                loadDetailedStudentScores(student, holder);
+            } else {
+                // Initially hide expandable container
+                holder.expandableContainer.setVisibility(View.GONE);
+            }
             
             // Edit button click listener
             holder.btnEdit.setOnClickListener(v -> {
@@ -931,15 +1012,18 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(v -> {
                 if (holder.expandableContainer.getVisibility() == View.GONE) {
                     // Expand and load scores
+                    expandedStudentIds.add(student.studentId);
                     holder.expandableContainer.setVisibility(View.VISIBLE);
                     holder.loadingContainer.setVisibility(View.VISIBLE);
                     holder.scoresContainer.setVisibility(View.GONE);
                     holder.noScoresContainer.setVisibility(View.GONE);
                     
-                    // Load detailed student scores
+                    // Load detailed student scores with real-time listeners
                     loadDetailedStudentScores(student, holder);
                 } else {
-                    // Collapse
+                    // Collapse - remove listeners for this student
+                    expandedStudentIds.remove(student.studentId);
+                    removeStudentScoreListeners(student.studentId);
                     holder.expandableContainer.setVisibility(View.GONE);
                 }
             });
@@ -954,91 +1038,182 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         private void loadDetailedStudentScores(Student student, StudentViewHolder holder) {
             System.out.println("🔍 TeacherClassDetail: Loading detailed scores for " + student.fullName + " (ID: " + student.studentId + ")");
 
+            // Remove old listeners for this student
+            removeStudentScoreListeners(student.studentId);
+
             // Clear existing scores
             holder.scoresContainer.removeAllViews();
 
-            // Get all lessons from the class document
-            String[] lessons = {"INTRODUCTION TO JAVA", "VARIABLES and DATA", "OPERATORS and EXPRESSIONS",
-                    "CONDITIONAL STATEMENTS", "CONDITIONAL LOOPS", "ARRAYS"};
-
-            LessonScoreResult result = new LessonScoreResult();
-            loadAllLessonScores(student, holder, result, lessons, 0);
-        }
-
-        private void loadAllLessonScores(Student student, StudentViewHolder holder, LessonScoreResult result,
-                                         String[] lessons, int lessonIndex) {
-
-            if (lessonIndex >= lessons.length) {
-                // All lessons checked, display results
-                displayLessonScores(student, holder, result);
-                return;
+            // Use lessons loaded from Firestore (same order as student lesson list)
+            // If lessons haven't loaded yet, use fallback
+            if (lessonNames.isEmpty()) {
+                System.out.println("⚠️ TeacherClassDetail: Lessons not loaded yet, using fallback");
+                lessonNames.addAll(getDefaultLessons());
             }
 
-            String currentLesson = lessons[lessonIndex];
-            System.out.println("🔍 TeacherClassDetail: Loading scores for " + currentLesson + " for " + student.fullName);
+            // Create map to store lesson scores (maintain order from lessonNames)
+            Map<String, LessonScore> lessonScoreMap = new HashMap<>();
+            for (String lesson : lessonNames) {
+                LessonScore lessonScore = new LessonScore();
+                lessonScore.lessonName = lesson;
+                lessonScore.quizScore = 0;
+                lessonScore.quizAttempts = 0;
+                lessonScore.codeBuilderScore = 0;
+                lessonScore.codeBuilderAttempts = 0;
+                lessonScoreMap.put(lesson, lessonScore);
+            }
 
-            // Create lesson score entry
-            LessonScore lessonScore = new LessonScore();
-            lessonScore.lessonName = currentLesson;
-            lessonScore.quizScore = 0;
-            lessonScore.quizAttempts = 0;
-            lessonScore.codeBuilderScore = 0;
-            lessonScore.codeBuilderAttempts = 0;
-
-            // Load quiz score
-            FirebaseFirestore.getInstance()
+            // Add real-time listeners for each lesson and activity (in order from lessonNames)
+            for (String lessonName : lessonNames) {
+                // Quiz score listener
+                String quizKey = student.studentId + "_" + lessonName + "_quiz";
+                ListenerRegistration quizListener = FirebaseFirestore.getInstance()
                     .collection("Classes").document(classCode)
-                    .collection("Leaderboards").document(currentLesson + "_quiz")
+                    .collection("Leaderboards").document(lessonName + "_quiz")
                     .collection("Scores").document(student.studentId)
-                    .get()
-                    .addOnSuccessListener(quizDoc -> {
-                        if (quizDoc.exists()) {
-                            Long score = quizDoc.getLong("score");
-                            Long attempts = quizDoc.getLong("attemptsUsed");
+                    .addSnapshotListener((snapshot, error) -> {
+                        if (error != null || isFinishing() || isDestroyed()) return;
+                        
+                        LessonScore lessonScore = lessonScoreMap.get(lessonName);
+                        if (lessonScore != null && snapshot != null && snapshot.exists()) {
+                            Long score = snapshot.getLong("score");
+                            Long attempts = snapshot.getLong("attemptsUsed");
                             if (score != null) lessonScore.quizScore = score.intValue();
                             if (attempts != null) lessonScore.quizAttempts = attempts.intValue();
-                            System.out.println("🔍 TeacherClassDetail: Quiz score for " + currentLesson + ": " + lessonScore.quizScore);
+                            System.out.println("🔍 TeacherClassDetail: Real-time update - " + lessonName + " Quiz - Score: " + lessonScore.quizScore + ", Attempts: " + lessonScore.quizAttempts);
+                        } else if (lessonScore != null) {
+                            lessonScore.quizScore = 0;
+                            lessonScore.quizAttempts = 0;
                         }
-
-                        // Load code builder score
-                        FirebaseFirestore.getInstance()
-                                .collection("Classes").document(classCode)
-                                .collection("Leaderboards").document(currentLesson + "_code_builder")
-                                .collection("Scores").document(student.studentId)
-                                .get()
-                                .addOnSuccessListener(codeDoc -> {
-                                    if (codeDoc.exists()) {
-                                        Long score = codeDoc.getLong("score");
-                                        Long attempts = codeDoc.getLong("attemptsUsed");
-                                        if (score != null) lessonScore.codeBuilderScore = score.intValue();
-                                        if (attempts != null) lessonScore.codeBuilderAttempts = attempts.intValue();
-                                        System.out.println("🔍 TeacherClassDetail: Code Builder score for " + currentLesson + ": " + lessonScore.codeBuilderScore);
-                                    }
-
-                                    // Add to results
-                                    result.lessonScores.add(lessonScore);
-
-                                    // Load next lesson
-                                    loadAllLessonScores(student, holder, result, lessons, lessonIndex + 1);
-                                })
-                                .addOnFailureListener(e -> {
-                                    System.out.println("🔍 TeacherClassDetail: Error loading code builder score for " + currentLesson + ": " + e.getMessage());
-                                    result.lessonScores.add(lessonScore);
-                                    loadAllLessonScores(student, holder, result, lessons, lessonIndex + 1);
-                                });
-                    })
-                    .addOnFailureListener(e -> {
-                        System.out.println("🔍 TeacherClassDetail: Error loading quiz score for " + currentLesson + ": " + e.getMessage());
-                        result.lessonScores.add(lessonScore);
-                        loadAllLessonScores(student, holder, result, lessons, lessonIndex + 1);
+                        
+                        // Update UI on main thread
+                        runOnUiThread(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            // Find the holder again in case RecyclerView recycled it
+                            StudentViewHolder currentHolder = findViewHolderForStudent(student.studentId);
+                            if (currentHolder != null && currentHolder.expandableContainer.getVisibility() == View.VISIBLE) {
+                                // Holder found and card is expanded - update directly
+                                updateStudentScoresUI(student, currentHolder, new ArrayList<>(lessonScoreMap.values()));
+                            } else {
+                                // Holder not found or card collapsed - notify adapter to rebind
+                                // This will reload scores if card is expanded
+                                int position = findStudentPosition(student.studentId);
+                                if (position >= 0 && studentAdapter != null) {
+                                    studentAdapter.notifyItemChanged(position);
+                                }
+                            }
+                        });
                     });
+                studentScoreListeners.put(quizKey, quizListener);
+
+                // Code builder score listener
+                String codeBuilderKey = student.studentId + "_" + lessonName + "_code_builder";
+                ListenerRegistration codeBuilderListener = FirebaseFirestore.getInstance()
+                    .collection("Classes").document(classCode)
+                    .collection("Leaderboards").document(lessonName + "_code_builder")
+                    .collection("Scores").document(student.studentId)
+                    .addSnapshotListener((snapshot, error) -> {
+                        if (error != null || isFinishing() || isDestroyed()) return;
+                        
+                        LessonScore lessonScore = lessonScoreMap.get(lessonName);
+                        if (lessonScore != null && snapshot != null && snapshot.exists()) {
+                            Long score = snapshot.getLong("score");
+                            Long attempts = snapshot.getLong("attemptsUsed");
+                            if (score != null) lessonScore.codeBuilderScore = score.intValue();
+                            if (attempts != null) lessonScore.codeBuilderAttempts = attempts.intValue();
+                            System.out.println("🔍 TeacherClassDetail: Real-time update - " + lessonName + " Code Builder - Score: " + lessonScore.codeBuilderScore + ", Attempts: " + lessonScore.codeBuilderAttempts);
+                        } else if (lessonScore != null) {
+                            lessonScore.codeBuilderScore = 0;
+                            lessonScore.codeBuilderAttempts = 0;
+                        }
+                        
+                        // Update UI on main thread
+                        runOnUiThread(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            // Find the holder again in case RecyclerView recycled it
+                            StudentViewHolder currentHolder = findViewHolderForStudent(student.studentId);
+                            if (currentHolder != null && currentHolder.expandableContainer.getVisibility() == View.VISIBLE) {
+                                // Holder found and card is expanded - update directly
+                                updateStudentScoresUI(student, currentHolder, new ArrayList<>(lessonScoreMap.values()));
+                            } else {
+                                // Holder not found or card collapsed - notify adapter to rebind
+                                // This will reload scores if card is expanded
+                                int position = findStudentPosition(student.studentId);
+                                if (position >= 0 && studentAdapter != null) {
+                                    studentAdapter.notifyItemChanged(position);
+                                }
+                            }
+                        });
+                    });
+                studentScoreListeners.put(codeBuilderKey, codeBuilderListener);
+            }
         }
 
-        private void displayLessonScores(Student student, StudentViewHolder holder, LessonScoreResult result) {
+        private void updateStudentScoresUI(Student student, StudentViewHolder holder, List<LessonScore> lessonScores) {
+            if (isFinishing() || isDestroyed() || holder == null) return;
+            
+            // Verify holder is still bound to this student
+            int position = holder.getAdapterPosition();
+            if (position == RecyclerView.NO_POSITION || position >= filteredStudentsList.size()) {
+                return;
+            }
+            
+            Student currentStudent = filteredStudentsList.get(position);
+            if (!currentStudent.studentId.equals(student.studentId)) {
+                // Holder was recycled for a different student
+                return;
+            }
+            
+            displayLessonScores(student, holder, lessonScores);
+        }
+
+        private void removeStudentScoreListeners(String studentId) {
+            List<String> keysToRemove = new ArrayList<>();
+            for (String key : studentScoreListeners.keySet()) {
+                if (key.startsWith(studentId + "_")) {
+                    ListenerRegistration listener = studentScoreListeners.get(key);
+                    if (listener != null) {
+                        listener.remove();
+                    }
+                    keysToRemove.add(key);
+                }
+            }
+            for (String key : keysToRemove) {
+                studentScoreListeners.remove(key);
+            }
+            System.out.println("🔍 TeacherClassDetail: Removed " + keysToRemove.size() + " listeners for student " + studentId);
+        }
+
+        private StudentViewHolder findViewHolderForStudent(String studentId) {
+            if (studentsRecyclerView == null) return null;
+            
+            // Find the adapter position for this student
+            int position = findStudentPosition(studentId);
+            if (position == -1) return null;
+            
+            // Get the ViewHolder from RecyclerView
+            RecyclerView.ViewHolder viewHolder = studentsRecyclerView.findViewHolderForAdapterPosition(position);
+            if (viewHolder instanceof StudentViewHolder) {
+                return (StudentViewHolder) viewHolder;
+            }
+            
+            return null;
+        }
+
+        private int findStudentPosition(String studentId) {
+            for (int i = 0; i < filteredStudentsList.size(); i++) {
+                if (filteredStudentsList.get(i).studentId.equals(studentId)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private void displayLessonScores(Student student, StudentViewHolder holder, List<LessonScore> lessonScores) {
             // Hide loading
             holder.loadingContainer.setVisibility(View.GONE);
 
-            if (result.lessonScores.isEmpty()) {
+            if (lessonScores.isEmpty()) {
                 holder.noScoresContainer.setVisibility(View.VISIBLE);
                 holder.scoresContainer.setVisibility(View.GONE);
                 return;
@@ -1047,8 +1222,27 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
             holder.scoresContainer.setVisibility(View.VISIBLE);
             holder.noScoresContainer.setVisibility(View.GONE);
 
-            // Add lesson score views
-            for (LessonScore lessonScore : result.lessonScores) {
+            // Clear and rebuild all views
+            holder.scoresContainer.removeAllViews();
+
+            // Create a map for quick lookup
+            Map<String, LessonScore> lessonScoreMap = new HashMap<>();
+            for (LessonScore score : lessonScores) {
+                lessonScoreMap.put(score.lessonName, score);
+            }
+
+            // Add lesson score views in the same order as lessonNames (matching student lesson list)
+            for (String lessonName : lessonNames) {
+                LessonScore lessonScore = lessonScoreMap.get(lessonName);
+                if (lessonScore == null) {
+                    // Create empty score if not found
+                    lessonScore = new LessonScore();
+                    lessonScore.lessonName = lessonName;
+                    lessonScore.quizScore = 0;
+                    lessonScore.quizAttempts = 0;
+                    lessonScore.codeBuilderScore = 0;
+                    lessonScore.codeBuilderAttempts = 0;
+                }
                 View lessonView = LayoutInflater.from(holder.itemView.getContext())
                         .inflate(R.layout.item_lesson_score, holder.scoresContainer, false);
 
@@ -1083,8 +1277,8 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 holder.scoresContainer.addView(lessonView);
             }
 
-            System.out.println("🔍 TeacherClassDetail: Displayed " + result.lessonScores.size() + " lesson scores for " + student.fullName);
-}
+            System.out.println("🔍 TeacherClassDetail: Displayed " + lessonScores.size() + " lesson scores for " + student.fullName);
+        }
 
 class StudentViewHolder extends RecyclerView.ViewHolder {
             TextView nameText;
