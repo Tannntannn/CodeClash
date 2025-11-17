@@ -35,7 +35,7 @@ public class ConnectionManager {
     
     // Offline queue for operations
     private List<QueuedOperation> offlineQueue = new ArrayList<>();
-
+    
     // Debounce handling
     private static final long DEBOUNCE_MS = 800L;
     private Boolean pendingState = null;
@@ -117,17 +117,17 @@ public class ConnectionManager {
         }
         pendingState = connected;
         pendingRunnable = () -> {
-            boolean wasConnected = isConnected;
+        boolean wasConnected = isConnected;
             isConnected = pendingState;
             pendingState = null;
             if (isConnected && !wasConnected) {
-                Log.d(TAG, "Connection restored - processing offline queue");
-                processOfflineQueue();
-                notifyConnectionRestored();
+            Log.d(TAG, "Connection restored - processing offline queue");
+            processOfflineQueue();
+            notifyConnectionRestored();
             } else if (!isConnected && wasConnected) {
-                Log.d(TAG, "Connection lost");
-                notifyConnectionLost();
-            }
+            Log.d(TAG, "Connection lost");
+            notifyConnectionLost();
+        }
             notifyConnectionChanged(isConnected);
         };
         mainHandler.postDelayed(pendingRunnable, DEBOUNCE_MS);

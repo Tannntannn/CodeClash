@@ -90,6 +90,9 @@
             android:name=".CompilerModeActivity"
             android:exported="false" />
         <activity
+            android:name=".CompilerSubmissionsReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".StudentLeaderboardsActivity"
             android:exported="false" />
         <activity

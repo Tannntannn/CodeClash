@@ -20,4 +20,10 @@
         app:showAsAction="always"
         app:actionLayout="@layout/menu_action_lesson_management" />
         
+    <item
+        android:id="@+id/action_review_submissions"
+        android:title="Review Compiler Submissions"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_action_review_submissions" />
+        
 </menu>

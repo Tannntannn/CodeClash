@@ -141,6 +141,7 @@ public class Leaderboards extends Fragment {
     private void setupTabs() {
         activityTabLayout.addTab(activityTabLayout.newTab().setText("Quiz"));
         activityTabLayout.addTab(activityTabLayout.newTab().setText("Code Builder"));
+        activityTabLayout.addTab(activityTabLayout.newTab().setText("Compiler"));
 
         activityTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -151,6 +152,9 @@ public class Leaderboards extends Fragment {
                         break;
                     case 1:
                         currentActivityType = LeaderboardManager.ACTIVITY_CODE_BUILDER;
+                        break;
+                    case 2:
+                        currentActivityType = LeaderboardManager.ACTIVITY_COMPILER;
                         break;
                 }
                 loadLeaderboard();
@@ -255,48 +259,52 @@ public class Leaderboards extends Fragment {
             new LeaderboardManager.OnLeaderboardCallback() {
                 @Override
                 public void onSuccess(List<LeaderboardManager.LeaderboardEntry> entries) {
-                    if (!isAdded() || getActivity() == null) return;
+                        if (!isAdded() || getActivity() == null) return;
 
                     leaderboardEntries.clear();
                     leaderboardEntries.addAll(entries);
                     adapter.notifyDataSetChanged();
-                    if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+                        if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
 
                     if (entries.isEmpty()) {
-                        System.out.println("🏆 Leaderboards: No entries found, showing empty state");
-                        if (emptyStateText != null && emptyStateContainer != null) {
-                            if (currentActivityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
-                                emptyStateText.setText("No quiz scores yet");
-                            } else {
-                                emptyStateText.setText("No code builder scores yet");
+                            System.out.println("🏆 Leaderboards: No entries found, showing empty state");
+                            if (emptyStateText != null && emptyStateContainer != null) {
+                                if (currentActivityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
+                                    emptyStateText.setText("No quiz scores yet");
+                                } else if (currentActivityType.equals(LeaderboardManager.ACTIVITY_CODE_BUILDER)) {
+                                    emptyStateText.setText("No code builder scores yet");
+                                } else if (currentActivityType.equals(LeaderboardManager.ACTIVITY_COMPILER)) {
+                                    emptyStateText.setText("No compiler scores yet");
+                                } else {
+                                    emptyStateText.setText("No scores yet");
+                                }
+                                emptyStateContainer.setVisibility(View.VISIBLE);
                             }
-                            emptyStateContainer.setVisibility(View.VISIBLE);
-                        }
-                        if (recyclerView != null) {
-                            recyclerView.setVisibility(View.GONE);
-                        }
+                            if (recyclerView != null) {
+                        recyclerView.setVisibility(View.GONE);
+                            }
                     } else {
                         System.out.println("🏆 Leaderboards: Real-time update - Showing " + entries.size() + " entries");
-                        if (emptyStateContainer != null) {
-                            emptyStateContainer.setVisibility(View.GONE);
-                        }
-                        if (recyclerView != null) {
-                            recyclerView.setVisibility(View.VISIBLE);
-                        }
+                            if (emptyStateContainer != null) {
+                                emptyStateContainer.setVisibility(View.GONE);
+                            }
+                            if (recyclerView != null) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                            }
                     }
                 }
 
                 @Override
                 public void onFailure(Exception e) {
-                    if (!isAdded() || getActivity() == null) return;
+                        if (!isAdded() || getActivity() == null) return;
 
                     emptyStateText.setText("Failed to load leaderboard");
-                    emptyStateContainer.setVisibility(View.VISIBLE);
+                        emptyStateContainer.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
-                    if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
-                    if (getContext() != null) {
-                        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                        if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+                        if (getContext() != null) {
+                    Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                 }
             });
     }
@@ -326,7 +334,16 @@ public class Leaderboards extends Fragment {
             // Show student name with class and lesson info
             String displayName = entry.studentName;
             if (entry.classCode != null && entry.lessonName != null && entry.activityType != null) {
-                String activityDisplay = entry.activityType.equals(LeaderboardManager.ACTIVITY_QUIZ) ? "Quiz" : "Code Builder";
+                String activityDisplay;
+                if (entry.activityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
+                    activityDisplay = "Quiz";
+                } else if (entry.activityType.equals(LeaderboardManager.ACTIVITY_CODE_BUILDER)) {
+                    activityDisplay = "Code Builder";
+                } else if (entry.activityType.equals(LeaderboardManager.ACTIVITY_COMPILER)) {
+                    activityDisplay = "Compiler";
+                } else {
+                    activityDisplay = "Unknown";
+                }
                 displayName += "\n" + entry.classCode + " • " + entry.lessonName + " • " + activityDisplay;
             }
             holder.studentNameText.setText(displayName);
@@ -641,8 +658,12 @@ public class Leaderboards extends Fragment {
             System.out.println("🏆 Leaderboards: No entries found, showing empty state");
             if (currentActivityType.equals(LeaderboardManager.ACTIVITY_QUIZ)) {
                 emptyStateText.setText("No quiz scores yet");
-            } else {
+            } else if (currentActivityType.equals(LeaderboardManager.ACTIVITY_CODE_BUILDER)) {
                 emptyStateText.setText("No code builder scores yet");
+            } else if (currentActivityType.equals(LeaderboardManager.ACTIVITY_COMPILER)) {
+                emptyStateText.setText("No compiler scores yet");
+            } else {
+                emptyStateText.setText("No scores yet");
             }
             emptyStateContainer.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);

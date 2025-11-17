@@ -53,11 +53,8 @@ public class LeaderboardManager {
             return;
         }
         
-        // Skip scoring for compiler activity
-        if (ACTIVITY_COMPILER.equals(activityType)) {
-            System.out.println("🏆 LeaderboardManager: Skipping compiler activity (no leaderboard)");
-            return;
-        }
+        // Compiler activity is now scored (manual grading by teacher)
+        // No longer skipping compiler activity
         
         // Check if student already has a score for this activity
         getDb().collection("Classes").document(classCode)
@@ -159,11 +156,8 @@ public class LeaderboardManager {
                                           Integer limit, OnLeaderboardCallback callback) {
         System.out.println("🏆 LeaderboardManager: getScoresInternal() called - Class: " + classCode + ", Lesson: " + lessonName + ", Activity: " + activityType + ", limit=" + limit);
 
-        if (ACTIVITY_COMPILER.equals(activityType)) {
-            System.out.println("🏆 LeaderboardManager: Skipping compiler activity");
-            callback.onSuccess(new ArrayList<>());
-            return;
-        }
+        // Compiler activity is now included in leaderboards
+        // No longer skipping
 
         String documentPath = "Classes/" + classCode + "/Leaderboards/" + lessonName + "_" + activityType + "/Scores";
         System.out.println("🏆 LeaderboardManager: Querying path: " + documentPath);
@@ -248,11 +242,8 @@ public class LeaderboardManager {
                                                                  Integer limit, OnLeaderboardCallback callback) {
         System.out.println("🏆 LeaderboardManager: addRealtimeScoresListener() called - Class: " + classCode + ", Lesson: " + lessonName + ", Activity: " + activityType + ", limit=" + limit);
 
-        if (ACTIVITY_COMPILER.equals(activityType)) {
-            System.out.println("🏆 LeaderboardManager: Skipping compiler activity");
-            callback.onSuccess(new ArrayList<>());
-            return null;
-        }
+        // Compiler activity is now included in leaderboards
+        // No longer skipping
 
         if (classCode == null || lessonName == null || activityType == null) {
             System.out.println("❌ LeaderboardManager: Invalid input parameters for addRealtimeScoresListener");
@@ -371,11 +362,8 @@ public class LeaderboardManager {
      */
     public static void getStudentRanking(String classCode, String lessonName, String activityType,
                                         String studentId, OnRankingCallback callback) {
-        // No ranking for compiler activity
-        if (ACTIVITY_COMPILER.equals(activityType)) {
-            callback.onSuccess(-1);
-            return;
-        }
+        // Compiler activity now supports ranking
+        // No longer skipping compiler activity
         
         getTopScores(classCode, lessonName, activityType, new OnLeaderboardCallback() {
             @Override

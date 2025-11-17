@@ -74,7 +74,8 @@
             android:gravity="center"
             android:background="@drawable/code_builder_score_background"
             android:padding="8dp"
-            android:layout_marginStart="4dp">
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -100,6 +101,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0/3"
+                android:textColor="#666666"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+        <!-- Compiler Score Card -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/code_builder_score_background"
+            android:padding="8dp"
+            android:layout_marginStart="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚙️ Compiler"
+                android:textColor="#FF9800"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/compilerScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#FF9800"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/compilerAttempts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/1"
                 android:textColor="#666666"
                 android:textSize="10sp" />
 

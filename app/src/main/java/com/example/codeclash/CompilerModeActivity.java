@@ -24,6 +24,7 @@ import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -35,9 +36,12 @@ public class CompilerModeActivity extends AppCompatActivity {
     private TextView inputHintText;
     private TextView problemTitle;
     private TextView problemDescription;
-    private MaterialButton btnRun, btnClear;
+    private MaterialButton btnRun, btnClear, btnSubmit;
     private MaterialButton btnLoadSampleInput, btnClearInput;
     private ProgressBar progressBar;
+    private com.google.android.material.card.MaterialCardView submissionStatusCard;
+    private TextView submissionStatusTitle;
+    private TextView submissionStatusText;
     private OkHttpClient client;
     private Handler mainHandler;
     private android.content.SharedPreferences preferences;
@@ -48,6 +52,7 @@ public class CompilerModeActivity extends AppCompatActivity {
     private String classCode = "";
     private String studentId = "";
     private FirebaseFirestore db;
+    private String studentDisplayName = "Student";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,9 @@ public class CompilerModeActivity extends AppCompatActivity {
 
         // Populate lesson task card if lesson is provided
         populateLessonTask();
+        
+        // Check for existing submission status
+        checkSubmissionStatus();
     }
     
     private void initializeViews() {
@@ -82,9 +90,13 @@ public class CompilerModeActivity extends AppCompatActivity {
         problemDescription = findViewById(R.id.problemDescription);
         btnRun = findViewById(R.id.btnRun);
         btnClear = findViewById(R.id.btnClear);
+        btnSubmit = findViewById(R.id.btnSubmit);
         btnLoadSampleInput = findViewById(R.id.btnLoadSampleInput);
         btnClearInput = findViewById(R.id.btnClearInput);
         progressBar = findViewById(R.id.progressBar);
+        submissionStatusCard = findViewById(R.id.submissionStatusCard);
+        submissionStatusTitle = findViewById(R.id.submissionStatusTitle);
+        submissionStatusText = findViewById(R.id.submissionStatusText);
         
         mainHandler = new Handler(Looper.getMainLooper());
         preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -104,6 +116,9 @@ public class CompilerModeActivity extends AppCompatActivity {
         // Get current user ID
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             studentId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            loadStudentDisplayName();
+        } else {
+            studentDisplayName = "Student";
         }
         
         // Disable spell check and auto-correction for code editor
@@ -120,6 +135,45 @@ public class CompilerModeActivity extends AppCompatActivity {
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) { updateInputHint(); }
             @Override public void afterTextChanged(android.text.Editable s) {}
         });
+    }
+
+    private void loadStudentDisplayName() {
+        if (studentId == null || studentId.isEmpty()) {
+            studentDisplayName = getEmailFallbackName();
+            return;
+        }
+        UserNameManager.getUserName(studentId, new UserNameManager.NameCallback() {
+            @Override
+            public void onSuccess(String name) {
+                studentDisplayName = name;
+            }
+
+            @Override
+            public void onFailure(String fallbackName) {
+                studentDisplayName = getEmailFallbackName();
+            }
+        });
+    }
+
+    private String getEmailFallbackName() {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            String displayName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            if (displayName != null && !displayName.trim().isEmpty()) {
+                return displayName.trim();
+            }
+            String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            if (email != null && email.contains("@")) {
+                return email.split("@")[0];
+            }
+        }
+        return "Student";
+    }
+
+    private String resolveStudentName() {
+        if (studentDisplayName != null && !studentDisplayName.trim().isEmpty() && !"Unknown".equalsIgnoreCase(studentDisplayName)) {
+            return studentDisplayName;
+        }
+        return getEmailFallbackName();
     }
     
     private void setupCodeEditor() {
@@ -150,6 +204,7 @@ public class CompilerModeActivity extends AppCompatActivity {
     private void setupButtons() {
         btnRun.setOnClickListener(v -> runCode());
         btnClear.setOnClickListener(v -> clearCode());
+        btnSubmit.setOnClickListener(v -> submitForReview());
         if (btnLoadSampleInput != null) {
             btnLoadSampleInput.setOnClickListener(v -> {
                 String code = codeEditor.getText().toString();
@@ -546,5 +601,136 @@ public class CompilerModeActivity extends AppCompatActivity {
           .addOnFailureListener(e -> {
               System.out.println("❌ CompilerModeActivity: Failed to restore code from Firebase: " + e.getMessage());
           });
+    }
+    
+    /**
+     * Submit code for teacher review
+     */
+    private void submitForReview() {
+        if (classCode.isEmpty() || studentId.isEmpty() || lessonNameKey.equals("default")) {
+            Toast.makeText(this, "Cannot submit: Missing class or lesson information", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        String code = codeEditor.getText().toString().trim();
+        if (code.isEmpty()) {
+            Toast.makeText(this, "Please write some code before submitting", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        // Get student name (signup display name preferred)
+        final String studentName = resolveStudentName();
+        
+        // Show confirmation dialog
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Submit for Review")
+            .setMessage("Are you sure you want to submit your code for teacher review? You won't be able to edit it after submission.")
+            .setPositiveButton("Submit", (dialog, which) -> {
+                // Save submission to Firebase
+                saveSubmissionToFirebase(code, studentName);
+            })
+            .setNegativeButton("Cancel", null)
+            .show();
+    }
+    
+    /**
+     * Save submission to Firebase for teacher review
+     */
+    private void saveSubmissionToFirebase(String code, String studentName) {
+        String submissionId = studentId + "_" + lessonNameKey;
+        
+        System.out.println("📤 CompilerModeActivity: Submitting code for review");
+        System.out.println("📤 CompilerModeActivity: Class: " + classCode + ", Student: " + studentId + ", Lesson: " + lessonNameKey);
+        
+        Map<String, Object> submission = new HashMap<>();
+        submission.put("studentId", studentId);
+        submission.put("studentName", studentName);
+        submission.put("lessonName", lessonNameKey);
+        submission.put("code", code);
+        submission.put("status", "pending_review");
+        submission.put("submittedAt", System.currentTimeMillis());
+        submission.put("timestamp", com.google.firebase.Timestamp.now());
+        submission.put("grade", null);
+        submission.put("feedback", null);
+        submission.put("gradedAt", null);
+        
+        db.collection("Classes").document(classCode)
+          .collection("CompilerSubmissions").document(submissionId)
+          .set(submission)
+          .addOnSuccessListener(aVoid -> {
+              System.out.println("✅ CompilerModeActivity: Code submitted successfully for review");
+              Toast.makeText(this, "Code submitted for teacher review!", Toast.LENGTH_LONG).show();
+              
+              // Update UI to show submission status
+              showSubmissionStatus("pending_review", null, null);
+              
+              // Disable submit button (can only submit once)
+              btnSubmit.setEnabled(false);
+              btnSubmit.setText("Submitted for Review");
+          })
+          .addOnFailureListener(e -> {
+              System.out.println("❌ CompilerModeActivity: Failed to submit code: " + e.getMessage());
+              Toast.makeText(this, "Failed to submit code. Please try again.", Toast.LENGTH_SHORT).show();
+          });
+    }
+    
+    /**
+     * Check existing submission status
+     */
+    private void checkSubmissionStatus() {
+        if (classCode.isEmpty() || studentId.isEmpty() || lessonNameKey.equals("default")) {
+            return;
+        }
+        
+        String submissionId = studentId + "_" + lessonNameKey;
+        
+        db.collection("Classes").document(classCode)
+          .collection("CompilerSubmissions").document(submissionId)
+          .get()
+          .addOnSuccessListener(documentSnapshot -> {
+              if (documentSnapshot.exists()) {
+                  String status = documentSnapshot.getString("status");
+                  Long grade = documentSnapshot.getLong("grade");
+                  String feedback = documentSnapshot.getString("feedback");
+                  
+                  if (status != null) {
+                      showSubmissionStatus(status, grade != null ? grade.intValue() : null, feedback);
+                      
+                      // Disable submit button if already submitted
+                      if ("pending_review".equals(status) || "graded".equals(status)) {
+                          btnSubmit.setEnabled(false);
+                          if ("pending_review".equals(status)) {
+                              btnSubmit.setText("Submitted for Review");
+                          } else if ("graded".equals(status)) {
+                              btnSubmit.setText("Already Graded");
+                          }
+                      }
+                  }
+              }
+          })
+          .addOnFailureListener(e -> {
+              System.out.println("❌ CompilerModeActivity: Failed to check submission status: " + e.getMessage());
+          });
+    }
+    
+    /**
+     * Show submission status to student
+     */
+    private void showSubmissionStatus(String status, Integer grade, String feedback) {
+        if (submissionStatusCard == null) return;
+        
+        submissionStatusCard.setVisibility(View.VISIBLE);
+        
+        if ("pending_review".equals(status)) {
+            submissionStatusTitle.setText("Submission Status: Pending Review");
+            submissionStatusText.setText("Your code has been submitted and is waiting for teacher review.");
+        } else if ("graded".equals(status) && grade != null) {
+            submissionStatusTitle.setText("Submission Status: Graded");
+            String statusText = "Grade: " + grade + "/100";
+            if (feedback != null && !feedback.trim().isEmpty()) {
+                statusText += "\n\nTeacher Feedback:\n" + feedback;
+            }
+            submissionStatusText.setText(statusText);
+        }
     }
 } 

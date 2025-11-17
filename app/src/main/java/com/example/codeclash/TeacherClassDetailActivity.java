@@ -16,14 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.AlertDialog;
 import com.google.android.material.textfield.TextInputEditText;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -193,12 +194,11 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         MenuItem manageItem = menu.findItem(R.id.action_manage_attempts);
         android.view.View manageActionView = manageItem != null ? manageItem.getActionView() : null;
         if (manageActionView != null) {
-            android.widget.TextView btn = manageActionView.findViewById(R.id.btnManageAttempts);
-            if (btn != null) {
-                btn.setOnClickListener(v -> {
-                    showAttemptManagementOptions();
-                });
-            }
+            android.view.View btn = manageActionView.findViewById(R.id.btnManageAttempts);
+            android.view.View target = btn != null ? btn : manageActionView;
+            target.setOnClickListener(v -> {
+                showAttemptManagementOptions();
+            });
         }
         
         // Setup View Chart button
@@ -216,6 +216,17 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         if (lessonActionView != null) {
             lessonActionView.setOnClickListener(v -> {
                 showLessonManagementOptions();
+            });
+        }
+        
+        // Setup Review Submissions button
+        MenuItem reviewItem = menu.findItem(R.id.action_review_submissions);
+        android.view.View reviewActionView = reviewItem != null ? reviewItem.getActionView() : null;
+        if (reviewActionView != null) {
+            android.view.View btn = reviewActionView.findViewById(R.id.btnReviewSubmissions);
+            android.view.View target = btn != null ? btn : reviewActionView;
+            target.setOnClickListener(v -> {
+                openCompilerSubmissionsReview();
             });
         }
         
@@ -276,7 +287,7 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 // Fallback to default order if loading fails
                 lessonNames.clear();
                 lessonNames.addAll(getDefaultLessons());
-            });
+                });
     }
 
     @Override
@@ -292,9 +303,19 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         } else if (itemId == R.id.action_lesson_management) {
             showLessonManagementOptions();
             return true;
+        } else if (itemId == R.id.action_review_submissions) {
+            openCompilerSubmissionsReview();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    
+    private void openCompilerSubmissionsReview() {
+        Intent intent = new Intent(this, CompilerSubmissionsReviewActivity.class);
+        intent.putExtra("classCode", classCode);
+        intent.putExtra("className", className);
+        startActivity(intent);
     }
 
     private void refreshData() {
@@ -479,7 +500,7 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         dialog.show();
         
         // Initialize chart components
-        LineChart lineChart = dialogView.findViewById(R.id.lineChart);
+        BarChart barChart = dialogView.findViewById(R.id.barChart);
         LinearLayout loadingContainer = dialogView.findViewById(R.id.loadingContainer);
         LinearLayout emptyStateContainer = dialogView.findViewById(R.id.emptyStateContainer);
         Button btnClose = dialogView.findViewById(R.id.btnClose);
@@ -488,7 +509,7 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         // Show loading state
         loadingContainer.setVisibility(View.VISIBLE);
         emptyStateContainer.setVisibility(View.GONE);
-        lineChart.setVisibility(View.GONE);
+        barChart.setVisibility(View.GONE);
         
         // Setup buttons
         btnClose.setOnClickListener(v -> dialog.dismiss());
@@ -496,15 +517,15 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
             // Show loading and refresh data
             loadingContainer.setVisibility(View.VISIBLE);
             emptyStateContainer.setVisibility(View.GONE);
-            lineChart.setVisibility(View.GONE);
-            loadChartData(lineChart, loadingContainer, emptyStateContainer);
+            barChart.setVisibility(View.GONE);
+            loadChartData(barChart, loadingContainer, emptyStateContainer);
         });
         
         // Load chart data
-        loadChartData(lineChart, loadingContainer, emptyStateContainer);
+        loadChartData(barChart, loadingContainer, emptyStateContainer);
     }
     
-    private void loadChartData(LineChart lineChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer) {
+    private void loadChartData(BarChart barChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer) {
         System.out.println("🔍 TeacherClassDetail: Loading chart data for class: " + classCode);
         
         // Use lessons loaded from Firestore (same order as student lesson list)
@@ -512,15 +533,15 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         String[] lessons = lessonsList.toArray(new String[0]);
         
         ChartDataResult result = new ChartDataResult();
-        loadAllLessonChartData(result, lessons, 0, lineChart, loadingContainer, emptyStateContainer);
+        loadAllLessonChartData(result, lessons, 0, barChart, loadingContainer, emptyStateContainer);
     }
     
     private void loadAllLessonChartData(ChartDataResult result, String[] lessons, int lessonIndex,
-                                       LineChart lineChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer) {
+                                       BarChart barChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer) {
         
         if (lessonIndex >= lessons.length) {
             // All lessons processed, render chart
-            renderChart(lineChart, loadingContainer, emptyStateContainer, result);
+            renderChart(barChart, loadingContainer, emptyStateContainer, result);
             return;
         }
         
@@ -529,8 +550,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
         
         LessonChartData lessonData = new LessonChartData();
         lessonData.lessonName = currentLesson;
-        lessonData.quizPassingCount = 0;
-        lessonData.codeBuilderPassingCount = 0;
+        lessonData.quizPassingPercent = 0;
+        lessonData.codeBuilderPassingPercent = 0;
+        lessonData.compilerPassingPercent = 0;
         
         // Load quiz passing count
         FirebaseFirestore.getInstance()
@@ -540,13 +562,23 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(quizSnapshot -> {
                     int passingCount = 0;
+                    int attemptedCount = 0;
                     for (DocumentSnapshot doc : quizSnapshot) {
                         Long score = doc.getLong("score");
-                        if (score != null && score >= 8) { // Quiz passing threshold: 8/15
+                        if (score != null) {
+                            attemptedCount++; // Count students who attempted
+                            if (score >= 8) { // Quiz passing threshold: 8/15
                             passingCount++;
                         }
                     }
-                    lessonData.quizPassingCount = passingCount;
+                    }
+                    // Calculate percentage: (passing / attempted) * 100
+                    // Only count students who actually attempted the activity
+                    if (attemptedCount > 0) {
+                        lessonData.quizPassingPercent = (int) Math.round((passingCount * 100.0) / attemptedCount);
+                    } else {
+                        lessonData.quizPassingPercent = 0;
+                    }
                     
                     // Load code builder passing count
                     FirebaseFirestore.getInstance()
@@ -556,140 +588,305 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                             .get()
                             .addOnSuccessListener(codeSnapshot -> {
                                 int codePassingCount = 0;
+                                int codeAttemptedCount = 0;
                                 for (DocumentSnapshot doc : codeSnapshot) {
                                     Long score = doc.getLong("score");
-                                    if (score != null && score >= 15) { // Code Builder passing threshold: 15/25
+                                    if (score != null) {
+                                        codeAttemptedCount++; // Count students who attempted
+                                        if (score >= 15) { // Code Builder passing threshold: 15/25
                                         codePassingCount++;
                                     }
                                 }
-                                lessonData.codeBuilderPassingCount = codePassingCount;
+                                }
+                                // Calculate percentage: (passing / attempted) * 100
+                                if (codeAttemptedCount > 0) {
+                                    lessonData.codeBuilderPassingPercent = (int) Math.round((codePassingCount * 100.0) / codeAttemptedCount);
+                                } else {
+                                    lessonData.codeBuilderPassingPercent = 0;
+                                }
+                                
+                                // Load compiler passing count
+                                FirebaseFirestore.getInstance()
+                                        .collection("Classes").document(classCode)
+                                        .collection("Leaderboards").document(currentLesson + "_compiler")
+                                        .collection("Scores")
+                                        .get()
+                                        .addOnSuccessListener(compilerSnapshot -> {
+                                            int compilerPassingCount = 0;
+                                            int compilerAttemptedCount = 0;
+                                            for (DocumentSnapshot doc : compilerSnapshot) {
+                                                Long score = doc.getLong("score");
+                                                if (score != null) {
+                                                    compilerAttemptedCount++; // Count students who attempted
+                                                    if (score >= 50) { // Compiler passing threshold: 50/100
+                                                        compilerPassingCount++;
+                                                    }
+                                                }
+                                            }
+                                            // Calculate percentage: (passing / attempted) * 100
+                                            if (compilerAttemptedCount > 0) {
+                                                lessonData.compilerPassingPercent = (int) Math.round((compilerPassingCount * 100.0) / compilerAttemptedCount);
+                                            } else {
+                                                lessonData.compilerPassingPercent = 0;
+                                            }
                                 
                                 result.lessonData.add(lessonData);
-                                loadAllLessonChartData(result, lessons, lessonIndex + 1, lineChart, loadingContainer, emptyStateContainer);
+                                loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            System.out.println("🔍 TeacherClassDetail: Error loading compiler chart data: " + e.getMessage());
+                                            lessonData.compilerPassingPercent = 0;
+                                            result.lessonData.add(lessonData);
+                                            loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        });
                             })
                             .addOnFailureListener(e -> {
                                 System.out.println("🔍 TeacherClassDetail: Error loading code builder chart data: " + e.getMessage());
-                                result.lessonData.add(lessonData);
-                                loadAllLessonChartData(result, lessons, lessonIndex + 1, lineChart, loadingContainer, emptyStateContainer);
+                                lessonData.codeBuilderPassingPercent = 0;
+                                // Still try to load compiler
+                                FirebaseFirestore.getInstance()
+                                        .collection("Classes").document(classCode)
+                                        .collection("Leaderboards").document(currentLesson + "_compiler")
+                                        .collection("Scores")
+                                        .get()
+                                        .addOnSuccessListener(compilerSnapshot -> {
+                                            int compilerPassingCount = 0;
+                                            int compilerAttemptedCount = 0;
+                                            for (DocumentSnapshot doc : compilerSnapshot) {
+                                                Long score = doc.getLong("score");
+                                                if (score != null) {
+                                                    compilerAttemptedCount++;
+                                                    if (score >= 50) {
+                                                        compilerPassingCount++;
+                                                    }
+                                                }
+                                            }
+                                            if (compilerAttemptedCount > 0) {
+                                                lessonData.compilerPassingPercent = (int) Math.round((compilerPassingCount * 100.0) / compilerAttemptedCount);
+                                            } else {
+                                                lessonData.compilerPassingPercent = 0;
+                                            }
+                                            result.lessonData.add(lessonData);
+                                            loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        })
+                                        .addOnFailureListener(e2 -> {
+                                            lessonData.compilerPassingPercent = 0;
+                                            result.lessonData.add(lessonData);
+                                            loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        });
                             });
                 })
                 .addOnFailureListener(e -> {
                     System.out.println("🔍 TeacherClassDetail: Error loading quiz chart data: " + e.getMessage());
+                    lessonData.quizPassingPercent = 0;
+                    // Still try to load code builder and compiler
+                    FirebaseFirestore.getInstance()
+                            .collection("Classes").document(classCode)
+                            .collection("Leaderboards").document(currentLesson + "_code_builder")
+                            .collection("Scores")
+                            .get()
+                            .addOnSuccessListener(codeSnapshot -> {
+                                int codePassingCount = 0;
+                                int codeAttemptedCount = 0;
+                                for (DocumentSnapshot doc : codeSnapshot) {
+                                    Long score = doc.getLong("score");
+                                    if (score != null) {
+                                        codeAttemptedCount++;
+                                        if (score >= 15) {
+                                            codePassingCount++;
+                                        }
+                                    }
+                                }
+                                if (codeAttemptedCount > 0) {
+                                    lessonData.codeBuilderPassingPercent = (int) Math.round((codePassingCount * 100.0) / codeAttemptedCount);
+                                } else {
+                                    lessonData.codeBuilderPassingPercent = 0;
+                                }
+                                
+                                FirebaseFirestore.getInstance()
+                                        .collection("Classes").document(classCode)
+                                        .collection("Leaderboards").document(currentLesson + "_compiler")
+                                        .collection("Scores")
+                                        .get()
+                                        .addOnSuccessListener(compilerSnapshot -> {
+                                            int compilerPassingCount = 0;
+                                            int compilerAttemptedCount = 0;
+                                            for (DocumentSnapshot doc : compilerSnapshot) {
+                                                Long score = doc.getLong("score");
+                                                if (score != null) {
+                                                    compilerAttemptedCount++;
+                                                    if (score >= 50) {
+                                                        compilerPassingCount++;
+                                                    }
+                                                }
+                                            }
+                                            if (compilerAttemptedCount > 0) {
+                                                lessonData.compilerPassingPercent = (int) Math.round((compilerPassingCount * 100.0) / compilerAttemptedCount);
+                                            } else {
+                                                lessonData.compilerPassingPercent = 0;
+                                            }
+                                            result.lessonData.add(lessonData);
+                                            loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        })
+                                        .addOnFailureListener(e2 -> {
+                                            lessonData.compilerPassingPercent = 0;
                     result.lessonData.add(lessonData);
-                    loadAllLessonChartData(result, lessons, lessonIndex + 1, lineChart, loadingContainer, emptyStateContainer);
+                    loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                                        });
+                            })
+                            .addOnFailureListener(e2 -> {
+                                lessonData.codeBuilderPassingPercent = 0;
+                                lessonData.compilerPassingPercent = 0;
+                                result.lessonData.add(lessonData);
+                                loadAllLessonChartData(result, lessons, lessonIndex + 1, barChart, loadingContainer, emptyStateContainer);
+                            });
                 });
     }
     
-    private void renderChart(LineChart lineChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer, ChartDataResult result) {
+    private void renderChart(BarChart barChart, LinearLayout loadingContainer, LinearLayout emptyStateContainer, ChartDataResult result) {
         loadingContainer.setVisibility(View.GONE);
         
         if (result.lessonData.isEmpty()) {
             emptyStateContainer.setVisibility(View.VISIBLE);
-            lineChart.setVisibility(View.GONE);
+            barChart.setVisibility(View.GONE);
             return;
         }
         
-        lineChart.setVisibility(View.VISIBLE);
+        barChart.setVisibility(View.VISIBLE);
         emptyStateContainer.setVisibility(View.GONE);
         
-        // Prepare data entries
-        List<Entry> quizEntries = new ArrayList<>();
-        List<Entry> codeBuilderEntries = new ArrayList<>();
-        
-        for (int i = 0; i < result.lessonData.size(); i++) {
+        // Prepare data entries (now showing percentages 0-100)
+        List<BarEntry> quizEntries = new ArrayList<>();
+        List<BarEntry> codeBuilderEntries = new ArrayList<>();
+        List<BarEntry> compilerEntries = new ArrayList<>();
+        List<String> lessonLabels = new ArrayList<>();
+
+        int lessonCount = result.lessonData.size();
+        for (int i = 0; i < lessonCount; i++) {
             LessonChartData data = result.lessonData.get(i);
-            quizEntries.add(new Entry(i, data.quizPassingCount));
-            codeBuilderEntries.add(new Entry(i, data.codeBuilderPassingCount));
+            float x = i; // L1 -> 0f, L2 -> 1f, etc.
+
+            // Debug log so we can see exactly what the chart is plotting
+            System.out.println("📊 Chart lesson " + (i + 1) + " -> Quiz=" + data.quizPassingPercent
+                    + "% CodeBuilder=" + data.codeBuilderPassingPercent
+                    + "% Compiler=" + data.compilerPassingPercent + "%");
+
+            quizEntries.add(new BarEntry(x, data.quizPassingPercent));
+            codeBuilderEntries.add(new BarEntry(x, data.codeBuilderPassingPercent));
+            compilerEntries.add(new BarEntry(x, data.compilerPassingPercent));
+            lessonLabels.add("L" + (i + 1));
         }
         
-        // Create datasets
-        LineDataSet quizDataSet = new LineDataSet(quizEntries, "Quiz");
-        quizDataSet.setColor(android.graphics.Color.BLUE);
-        quizDataSet.setCircleColor(android.graphics.Color.BLUE);
-        quizDataSet.setLineWidth(3f);
-        quizDataSet.setCircleRadius(6f);
-        quizDataSet.setValueTextSize(14f);
-        quizDataSet.setValueTextColor(android.graphics.Color.BLACK);
-        quizDataSet.setDrawValues(true);
-        quizDataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.valueOf((int) value); // Show as integer, not decimal
-            }
-        });
+        // Create datasets with improved styling
+        BarDataSet quizDataSet = new BarDataSet(quizEntries, "Quiz");
+        quizDataSet.setColor(android.graphics.Color.parseColor("#4F46E5")); // Vibrant indigo
+        quizDataSet.setDrawValues(false);
         
-        LineDataSet codeBuilderDataSet = new LineDataSet(codeBuilderEntries, "Code Builder");
-        codeBuilderDataSet.setColor(android.graphics.Color.parseColor("#FFA500")); // Orange
-        codeBuilderDataSet.setCircleColor(android.graphics.Color.parseColor("#FFA500"));
-        codeBuilderDataSet.setLineWidth(3f);
-        codeBuilderDataSet.setCircleRadius(6f);
-        codeBuilderDataSet.setValueTextSize(14f);
-        codeBuilderDataSet.setValueTextColor(android.graphics.Color.BLACK);
-        codeBuilderDataSet.setDrawValues(true);
-        codeBuilderDataSet.setValueFormatter(new ValueFormatter() {
-    @Override
-            public String getFormattedValue(float value) {
-                return String.valueOf((int) value); // Show as integer, not decimal
-            }
-        });
+        BarDataSet codeBuilderDataSet = new BarDataSet(codeBuilderEntries, "Code Builder");
+        codeBuilderDataSet.setColor(android.graphics.Color.parseColor("#10B981")); // Emerald
+        codeBuilderDataSet.setDrawValues(false);
         
-        // Combine datasets
-        List<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(quizDataSet);
-        dataSets.add(codeBuilderDataSet);
+        BarDataSet compilerDataSet = new BarDataSet(compilerEntries, "Compiler");
+        compilerDataSet.setColor(android.graphics.Color.parseColor("#F97316")); // Bright orange
+        compilerDataSet.setDrawValues(false);
         
-        LineData lineData = new LineData(dataSets);
-        lineChart.setData(lineData);
+        float groupSpace = 0.32f;
+        float barSpace = 0.02f;
+        float barWidth = (1f - groupSpace) / 3f - barSpace;
+        BarData barData = new BarData(quizDataSet, codeBuilderDataSet, compilerDataSet);
+        barData.setBarWidth(barWidth);
+        barData.setValueTextSize(10f);
+        barChart.setData(barData);
+        barChart.getXAxis().setCenterAxisLabels(true);
+        barChart.groupBars(0f, groupSpace, barSpace);
         
         // Configure chart appearance
-        lineChart.getDescription().setEnabled(false);
-        lineChart.setTouchEnabled(true);
-        lineChart.setDragEnabled(true);
-        lineChart.setScaleEnabled(true);
-        lineChart.setPinchZoom(true);
-        lineChart.setBackgroundColor(android.graphics.Color.WHITE);
+        barChart.getDescription().setEnabled(false);
+        barChart.setTouchEnabled(true);
+        barChart.setDragEnabled(true);
+        barChart.setScaleEnabled(false);
+        barChart.setPinchZoom(false);
+        barChart.setDoubleTapToZoomEnabled(false);
+        barChart.setBackgroundColor(android.graphics.Color.WHITE);
+        barChart.setDrawGridBackground(false);
+        barChart.setExtraOffsets(16f, 20f, 24f, 22f); // Top, Right, Bottom, Left padding
+        barChart.setNoDataText("No data available");
+        barChart.setNoDataTextColor(getResources().getColor(R.color.game_text_secondary));
+        barChart.setDrawBarShadow(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.setHighlightPerTapEnabled(false);
+        barChart.setHighlightFullBarEnabled(false);
+        barChart.animateY(900, Easing.EaseInOutQuad);
+        barChart.setFitBars(false);
         
-        // Configure X-axis
-        XAxis xAxis = lineChart.getXAxis();
+        // Configure X-axis: keep lesson labels centered while showing 3 bars per lesson
+        XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(android.graphics.Color.BLACK);
-        xAxis.setTextSize(12f);
-        xAxis.setLabelCount(6, true); // Show all 6 lessons
-        xAxis.setGranularity(1f); // No decimal values
+        xAxis.setTextColor(getResources().getColor(R.color.game_text_primary));
+        xAxis.setTextSize(12.5f);
+        xAxis.setLabelCount(lessonLabels.size(), true); // Show all lessons
+        xAxis.setGranularity(1f); // 1 step between lessons
+        float groupWidth = barData.getGroupWidth(groupSpace, barSpace);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(0f + groupWidth * lessonLabels.size());
+        xAxis.setDrawGridLines(true);
+        xAxis.setGridColor(getResources().getColor(R.color.game_gray_border));
+        xAxis.setGridLineWidth(0.8f);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.game_gray_border));
+        xAxis.setAxisLineWidth(2f);
+        xAxis.setYOffset(8f); // Space between labels and axis
         xAxis.setValueFormatter(new ValueFormatter() {
-    @Override
+            @Override
             public String getFormattedValue(float value) {
-                int index = (int) value;
-                if (index >= 0 && index < result.lessonData.size()) {
-                    return "L" + (index + 1); // Shorter labels: L1, L2, L3, etc.
+                if (groupWidth == 0f) {
+                    return "";
+                }
+                int index = Math.round(value / groupWidth);
+                if (index >= 0 && index < lessonLabels.size()) {
+                    return lessonLabels.get(index);
                 }
                 return "";
             }
         });
         
-        // Configure Y-axis
-        YAxis leftAxis = lineChart.getAxisLeft();
-        leftAxis.setTextColor(android.graphics.Color.BLACK);
+        // Configure Y-axis (now showing percentages 0-100%)
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setTextColor(getResources().getColor(R.color.game_text_primary));
         leftAxis.setTextSize(12f);
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setGranularity(1f); // Only show integer values
-        // Calculate max value dynamically based on actual data
-        float maxValue = 0f;
-        for (LessonChartData data : result.lessonData) {
-            maxValue = Math.max(maxValue, Math.max(data.quizPassingCount, data.codeBuilderPassingCount));
-        }
-        leftAxis.setAxisMaximum(Math.max(maxValue + 3, 10f)); // Add more padding
+        leftAxis.setAxisMaximum(100f); // Percentage scale (0-100%)
+        leftAxis.setGranularity(20f); // Show labels at 0, 20, 40, 60, 80, 100
         leftAxis.setLabelCount(6, true); // Show 6 labels on Y-axis
+        leftAxis.setDrawGridLines(true);
+        leftAxis.setGridColor(getResources().getColor(R.color.game_gray_border));
+        leftAxis.setGridLineWidth(1f);
+        leftAxis.setAxisLineColor(getResources().getColor(R.color.game_gray_border));
+        leftAxis.setAxisLineWidth(1.5f);
+        leftAxis.setXOffset(10f); // Space between labels and axis
+        leftAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value) + "%";
+            }
+        });
         
-        YAxis rightAxis = lineChart.getAxisRight();
+        YAxis rightAxis = barChart.getAxisRight();
         rightAxis.setEnabled(false);
         
         // Configure legend
-        lineChart.getLegend().setTextColor(android.graphics.Color.BLACK);
-        lineChart.getLegend().setTextSize(10f);
+        barChart.getLegend().setTextColor(getResources().getColor(R.color.game_text_primary));
+        barChart.getLegend().setTextSize(13f);
+        barChart.getLegend().setHorizontalAlignment(com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment.CENTER);
+        barChart.getLegend().setVerticalAlignment(com.github.mikephil.charting.components.Legend.LegendVerticalAlignment.BOTTOM);
+        barChart.getLegend().setOrientation(com.github.mikephil.charting.components.Legend.LegendOrientation.HORIZONTAL);
+        barChart.getLegend().setDrawInside(false);
+        barChart.getLegend().setFormSize(12f);
+        barChart.getLegend().setFormToTextSpace(8f);
+        barChart.getLegend().setXEntrySpace(20f);
+        barChart.getLegend().setYOffset(10f);
         
         // Refresh chart
-        lineChart.invalidate();
+        barChart.invalidate();
         
         System.out.println("🔍 TeacherClassDetail: Chart rendered with " + result.lessonData.size() + " lessons");
     }
@@ -978,7 +1175,7 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
             String yearBlockDisplay = yearLevel + " - " + block;
             holder.yearBlockText.setText(yearBlockDisplay);
             holder.yearBlockText.setVisibility(View.VISIBLE);
-            
+
             System.out.println("🔍 TeacherClassDetail: Binding student " + position + ": " + student.fullName + ", Year: " + yearLevel + ", Block: " + block);
             System.out.println("🔍 TeacherClassDetail: Setting yearBlockText to: " + yearBlockDisplay);
 
@@ -994,8 +1191,8 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 // Reload scores with real-time listeners
                 loadDetailedStudentScores(student, holder);
             } else {
-                // Initially hide expandable container
-                holder.expandableContainer.setVisibility(View.GONE);
+            // Initially hide expandable container
+            holder.expandableContainer.setVisibility(View.GONE);
             }
             
             // Edit button click listener
@@ -1054,12 +1251,14 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
             // Create map to store lesson scores (maintain order from lessonNames)
             Map<String, LessonScore> lessonScoreMap = new HashMap<>();
             for (String lesson : lessonNames) {
-                LessonScore lessonScore = new LessonScore();
+            LessonScore lessonScore = new LessonScore();
                 lessonScore.lessonName = lesson;
-                lessonScore.quizScore = 0;
-                lessonScore.quizAttempts = 0;
-                lessonScore.codeBuilderScore = 0;
-                lessonScore.codeBuilderAttempts = 0;
+            lessonScore.quizScore = 0;
+            lessonScore.quizAttempts = 0;
+            lessonScore.codeBuilderScore = 0;
+            lessonScore.codeBuilderAttempts = 0;
+            lessonScore.compilerScore = 0;
+            lessonScore.compilerAttempts = 0;
                 lessonScoreMap.put(lesson, lessonScore);
             }
 
@@ -1109,9 +1308,9 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 // Code builder score listener
                 String codeBuilderKey = student.studentId + "_" + lessonName + "_code_builder";
                 ListenerRegistration codeBuilderListener = FirebaseFirestore.getInstance()
-                    .collection("Classes").document(classCode)
+                                .collection("Classes").document(classCode)
                     .collection("Leaderboards").document(lessonName + "_code_builder")
-                    .collection("Scores").document(student.studentId)
+                                .collection("Scores").document(student.studentId)
                     .addSnapshotListener((snapshot, error) -> {
                         if (error != null || isFinishing() || isDestroyed()) return;
                         
@@ -1119,14 +1318,14 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                         if (lessonScore != null && snapshot != null && snapshot.exists()) {
                             Long score = snapshot.getLong("score");
                             Long attempts = snapshot.getLong("attemptsUsed");
-                            if (score != null) lessonScore.codeBuilderScore = score.intValue();
-                            if (attempts != null) lessonScore.codeBuilderAttempts = attempts.intValue();
+                                        if (score != null) lessonScore.codeBuilderScore = score.intValue();
+                                        if (attempts != null) lessonScore.codeBuilderAttempts = attempts.intValue();
                             System.out.println("🔍 TeacherClassDetail: Real-time update - " + lessonName + " Code Builder - Score: " + lessonScore.codeBuilderScore + ", Attempts: " + lessonScore.codeBuilderAttempts);
                         } else if (lessonScore != null) {
                             lessonScore.codeBuilderScore = 0;
                             lessonScore.codeBuilderAttempts = 0;
-                        }
-                        
+                                    }
+
                         // Update UI on main thread
                         runOnUiThread(() -> {
                             if (isFinishing() || isDestroyed()) return;
@@ -1146,6 +1345,43 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                         });
                     });
                 studentScoreListeners.put(codeBuilderKey, codeBuilderListener);
+
+                // Compiler score listener
+                String compilerKey = student.studentId + "_" + lessonName + "_compiler";
+                ListenerRegistration compilerListener = FirebaseFirestore.getInstance()
+                    .collection("Classes").document(classCode)
+                    .collection("Leaderboards").document(lessonName + "_compiler")
+                    .collection("Scores").document(student.studentId)
+                    .addSnapshotListener((snapshot, error) -> {
+                        if (error != null || isFinishing() || isDestroyed()) return;
+                        
+                        LessonScore lessonScore = lessonScoreMap.get(lessonName);
+                        if (lessonScore != null && snapshot != null && snapshot.exists()) {
+                            Long score = snapshot.getLong("score");
+                            Long attempts = snapshot.getLong("attemptsUsed");
+                            if (score != null) lessonScore.compilerScore = score.intValue();
+                            if (attempts != null) lessonScore.compilerAttempts = attempts.intValue();
+                            System.out.println("🔍 TeacherClassDetail: Real-time update - " + lessonName + " Compiler - Score: " + lessonScore.compilerScore + ", Attempts: " + lessonScore.compilerAttempts);
+                        } else if (lessonScore != null) {
+                            lessonScore.compilerScore = 0;
+                            lessonScore.compilerAttempts = 0;
+                        }
+                        
+                        // Update UI on main thread
+                        runOnUiThread(() -> {
+                            if (isFinishing() || isDestroyed()) return;
+                            StudentViewHolder currentHolder = findViewHolderForStudent(student.studentId);
+                            if (currentHolder != null && currentHolder.expandableContainer.getVisibility() == View.VISIBLE) {
+                                updateStudentScoresUI(student, currentHolder, new ArrayList<>(lessonScoreMap.values()));
+                            } else {
+                                int position = findStudentPosition(student.studentId);
+                                if (position >= 0 && studentAdapter != null) {
+                                    studentAdapter.notifyItemChanged(position);
+                                }
+                            }
+                        });
+                    });
+                studentScoreListeners.put(compilerKey, compilerListener);
             }
         }
 
@@ -1242,6 +1478,8 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                     lessonScore.quizAttempts = 0;
                     lessonScore.codeBuilderScore = 0;
                     lessonScore.codeBuilderAttempts = 0;
+                    lessonScore.compilerScore = 0;
+                    lessonScore.compilerAttempts = 0;
                 }
                 View lessonView = LayoutInflater.from(holder.itemView.getContext())
                         .inflate(R.layout.item_lesson_score, holder.scoresContainer, false);
@@ -1251,6 +1489,8 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 TextView quizAttemptsText = lessonView.findViewById(R.id.quizAttempts);
                 TextView codeBuilderScoreText = lessonView.findViewById(R.id.codeBuilderScore);
                 TextView codeBuilderAttemptsText = lessonView.findViewById(R.id.codeBuilderAttempts);
+                TextView compilerScoreText = lessonView.findViewById(R.id.compilerScore);
+                TextView compilerAttemptsText = lessonView.findViewById(R.id.compilerAttempts);
 
                 lessonNameText.setText(lessonScore.lessonName);
 
@@ -1274,11 +1514,21 @@ public class TeacherClassDetailActivity extends AppCompatActivity {
                 }
                 codeBuilderAttemptsText.setText(lessonScore.codeBuilderAttempts + "/3");
 
+                // Compiler scores
+                if (lessonScore.compilerScore > 0) {
+                    compilerScoreText.setText(String.valueOf(lessonScore.compilerScore));
+                    compilerScoreText.setTextColor(0xFFFF9800);
+                } else {
+                    compilerScoreText.setText("--");
+                    compilerScoreText.setTextColor(0xFF999999);
+                }
+                compilerAttemptsText.setText(lessonScore.compilerAttempts + "/1");
+
                 holder.scoresContainer.addView(lessonView);
             }
 
             System.out.println("🔍 TeacherClassDetail: Displayed " + lessonScores.size() + " lesson scores for " + student.fullName);
-        }
+}
 
 class StudentViewHolder extends RecyclerView.ViewHolder {
             TextView nameText;
@@ -1315,6 +1565,8 @@ class StudentViewHolder extends RecyclerView.ViewHolder {
         int quizAttempts;
         int codeBuilderScore;
         int codeBuilderAttempts;
+        int compilerScore;
+        int compilerAttempts;
     }
 
     // Chart helper classes
@@ -1324,8 +1576,9 @@ class StudentViewHolder extends RecyclerView.ViewHolder {
 
     private static class LessonChartData {
         String lessonName;
-        int quizPassingCount;
-        int codeBuilderPassingCount;
+        int quizPassingPercent; // percentage 0-100
+        int codeBuilderPassingPercent;
+        int compilerPassingPercent;
     }
 
     // Legacy helper classes (kept for compatibility)

@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="8dp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRun"
@@ -156,6 +156,57 @@
                     app:iconTint="#FFFFFF" />
 
             </LinearLayout>
+
+            <!-- Submit Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Submit for Teacher Review"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/game_success"
+                app:cornerRadius="8dp"
+                app:icon="@android:drawable/ic_menu_send"
+                app:iconTint="#FFFFFF" />
+
+            <!-- Submission Status Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/submissionStatusCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/submissionStatusTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Submission Status"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_500"
+                        android:layout_marginBottom="6dp" />
+
+                    <TextView
+                        android:id="@+id/submissionStatusText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Your code has been submitted for review."
+                        android:textSize="13sp"
+                        android:textColor="#333333" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Output Card -->
             <com.google.android.material.card.MaterialCardView
